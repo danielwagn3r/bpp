@@ -11,7 +11,7 @@ class Chromosom extends Object implements Cloneable {
         double g = 0.0;
         
         for( int j = 0; j < gens.size(); ++j ) {
-            g += bpp.data[( (Integer)gens.get( j ) ).intValue()];
+            g += bpp.data[( gens.get( j ) ).intValue()];
         }
 
         return( g );
@@ -25,7 +25,7 @@ class Chromosom extends Object implements Cloneable {
         Integer g;
 
         for( int j = 0; j < gens.size(); ++j ) {
-            g = (Integer)gens.get( j );
+            g = gens.get( j );
 
             if( g.intValue() == i ) {
                 gens.remove( g );
@@ -34,27 +34,30 @@ class Chromosom extends Object implements Cloneable {
     }
 
     public int get( int i ) {
-        return ( (Integer) gens.get( i ) ).intValue();
+        return ( gens.get( i ) ).intValue();
     }
 
     public int size() {
         return( gens.size() );
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
         String out = "";
         
         for( int j = 0; j < gens.size(); ++j ) {
-            if( j > 0 )
-                out += " " + gens.get( j );
-            else
-                out += gens.get( j );
+            if( j > 0 ) {
+				out += " " + gens.get( j );
+			} else {
+				out += gens.get( j );
+			}
         }
 
         return( out );
     }
 
-    public Object clone() {
+    @Override
+	public Object clone() {
         Chromosom c = new Chromosom();
 
         for( int j = 0; j < gens.size(); ++j ) {

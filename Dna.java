@@ -6,8 +6,9 @@ class Dna extends Object implements Cloneable {
 	public Dna(boolean init) {
 		dna = new Vector<Chromosom>();
 
-		if (init)
+		if (init) {
 			init();
+		}
 	}
 
 	public Dna(int[] a) {
@@ -97,6 +98,7 @@ class Dna extends Object implements Cloneable {
 		dna.add(c);
 	}
 
+	@Override
 	public String toString() {
 		String out;
 		Chromosom c;
@@ -106,15 +108,17 @@ class Dna extends Object implements Cloneable {
 		for (int j = 0; j < dna.size(); ++j) {
 			c = dna.get(j);
 
-			if (j > 0)
+			if (j > 0) {
 				out += " | " + c.toString();
-			else
+			} else {
 				out += c.toString();
+			}
 		}
 
 		return (out);
 	}
 
+	@Override
 	public Object clone() {
 		Dna d = new Dna(false);
 
@@ -157,8 +161,9 @@ class Dna extends Object implements Cloneable {
 
 				if (f[l]) {
 					c.remove(l);
-				} else
+				} else {
 					j++;
+				}
 
 				f[l] = true;
 			}
@@ -171,8 +176,9 @@ class Dna extends Object implements Cloneable {
 
 			if (c.size() == 0) {
 				dna.remove(c);
-			} else
+			} else {
 				i++;
+			}
 		}
 
 		// fehlende wieder einfügen
@@ -183,8 +189,9 @@ class Dna extends Object implements Cloneable {
 				for (j = 0; j < dna.size(); ++j) {
 					c = dna.get(j);
 
-					if (c.weight() + bpp.data[i] <= bpp.wmax)
+					if (c.weight() + bpp.data[i] <= bpp.wmax) {
 						break;
+					}
 				}
 
 				if ((c == null) || (c.weight() + bpp.data[i] > bpp.wmax)) {

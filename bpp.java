@@ -1,6 +1,7 @@
+import gnu.getopt.*;
+
 import java.io.*;
 import java.util.*;
-import gnu.getopt.*;
 
 public class bpp {
 
@@ -48,9 +49,9 @@ public class bpp {
             while ( ( c = g.getopt() ) != -1 ) {
                 switch ( c ) {
                 case 'g':
-                    if ( gflag )
-                        usage();
-                    else {
+                    if ( gflag ) {
+						usage();
+					} else {
                         arg = g.getOptarg();
                         gen = ( new Integer( arg ) ).intValue();
                         gflag = true;
@@ -59,9 +60,9 @@ public class bpp {
                     break;
             
                 case 'n':
-                    if ( nflag )
-                        usage();
-                    else {
+                    if ( nflag ) {
+						usage();
+					} else {
                         arg = g.getOptarg();
                         mr = ( new Integer( arg ) ).intValue();
                         nflag = true;
@@ -70,24 +71,25 @@ public class bpp {
                     break;
             
                 case 'l':
-                    if ( lflag )
-                        usage();
-                    else {
+                    if ( lflag ) {
+						usage();
+					} else {
                         arg = g.getOptarg();
 
-                        if (  arg.equals( "b" ) )
-                            sel = 'a';
-                        else if ( arg.equals( "b" ) )
-                            sel = 'b';
+                        if (  arg.equals( "b" ) ) {
+							sel = 'a';
+						} else if ( arg.equals( "b" ) ) {
+							sel = 'b';
+						}
                         lflag = true;
                     }
                 
                     break;
                     
                 case 'm':
-                    if ( mflag )
-                        usage();
-                    else {
+                    if ( mflag ) {
+						usage();
+					} else {
                         arg = g.getOptarg();
                         mp = ( new Double( arg ) ).doubleValue();
                         mflag = true;
@@ -96,9 +98,9 @@ public class bpp {
                     break;
             
                 case 'p':
-                    if ( pflag )
-                        usage();
-                    else {
+                    if ( pflag ) {
+						usage();
+					} else {
                         arg = g.getOptarg();
                         ps = ( new Integer( arg ) ).intValue();
                         pflag = true;
@@ -107,9 +109,9 @@ public class bpp {
                     break;
             
                 case 'r':
-                    if ( rflag )
-                        usage();
-                    else {
+                    if ( rflag ) {
+						usage();
+					} else {
                         arg = g.getOptarg();
                         rp = ( new Double( arg ) ).doubleValue();
                         rflag = true;
@@ -118,9 +120,9 @@ public class bpp {
                     break;
             
                 case 's':
-                    if ( sflag )
-                        usage();
-                    else {
+                    if ( sflag ) {
+						usage();
+					} else {
                         arg = g.getOptarg();
                         sp = ( new Integer( arg ) ).intValue();
                         sflag = true;
@@ -129,9 +131,9 @@ public class bpp {
                     break;
             
                 case 'e':
-                    if ( eflag )
-                        usage();
-                    else {
+                    if ( eflag ) {
+						usage();
+					} else {
                         elitism = true;
                         eflag = true;
                     }
@@ -149,13 +151,14 @@ public class bpp {
                 }
             }
 
-            if ( g.getOptind() < args.length )
-                fname = args[g.getOptind()];
-            else
-                usage();
-        }
-        else
-            usage();
+            if ( g.getOptind() < args.length ) {
+				fname = args[g.getOptind()];
+			} else {
+				usage();
+			}
+        } else {
+			usage();
+		}
 
 
         // Ausgabe der eingestellten Optionen
@@ -210,8 +213,9 @@ public class bpp {
         System.out.println( "bpp: Population" );
 
         for ( int i = 0; i < ps; i++ ) {
-            if( all )
-                System.out.println( pop[i].toString() );
+            if( all ) {
+				System.out.println( pop[i].toString() );
+			}
             
             fit  = pop[i].fitness();
             sum += fit;
@@ -224,8 +228,9 @@ public class bpp {
 
         avg = sum / ps;
 
-        if( !all )
-            System.out.println( "  " + pop[best].toString() );
+        if( !all ) {
+			System.out.println( "  " + pop[best].toString() );
+		}
         
         System.out.println( "  Maximum: " + max );
         System.out.println( "  Average: " + avg );
@@ -383,10 +388,11 @@ public class bpp {
             b = rand.nextInt( ps );
 
             if( rand.nextDouble() < rp ) {
-                if( sel == 'a' )
-                    npop[i] = Dna.recombine_a( pop[a], pop[b] );
-                else
-                    npop[i] = Dna.recombine_b( pop[a], pop[b] );
+                if( sel == 'a' ) {
+					npop[i] = Dna.recombine_a( pop[a], pop[b] );
+				} else {
+					npop[i] = Dna.recombine_b( pop[a], pop[b] );
+				}
                 ++i;
             }
         }
