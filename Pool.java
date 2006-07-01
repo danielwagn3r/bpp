@@ -1,5 +1,3 @@
-import java.util.*;
-
 class Pool {
     boolean[] pool;
     int size;

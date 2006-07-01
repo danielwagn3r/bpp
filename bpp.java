@@ -375,7 +375,6 @@ public class bpp {
     
     static void recombination() {
         Dna npop[] = new Dna[ps];
-        Dna da, db;
         int a, b;
         int i = 0;
 

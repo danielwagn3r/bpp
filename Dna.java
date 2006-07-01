@@ -1,269 +1,263 @@
 import java.util.*;
 
 class Dna extends Object implements Cloneable {
-    Vector dna;
-    
-    public Dna( boolean init ) {
-        dna = new Vector();
+	Vector<Chromosom> dna;
 
-        if( init )
-            init();
-    }
+	public Dna(boolean init) {
+		dna = new Vector<Chromosom>();
 
-    public Dna( int[] a ) {
-        Chromosom c = new Chromosom();
-        dna = new Vector();
-        
-        for ( int j = 0; j < bpp.n; j++ ) {
-            if( c.weight() + bpp.data[a[j]] > bpp.wmax ) {
-                dna.add( c );
-                c = new Chromosom();
-            }
-            
-            c.add( a[j] );
-        }
+		if (init)
+			init();
+	}
 
-        dna.add( c );
-    }
+	public Dna(int[] a) {
+		Chromosom c = new Chromosom();
+		dna = new Vector<Chromosom>();
 
-    public double weight() {
-        double g   = 0.0;
+		for (int j = 0; j < bpp.n; j++) {
+			if (c.weight() + bpp.data[a[j]] > bpp.wmax) {
+				dna.add(c);
+				c = new Chromosom();
+			}
 
-        for ( int j = 0; j < dna.size(); j++ ) {
-            g += ( (Chromosom) dna.get( j ) ).weight();
-        }
+			c.add(a[j]);
+		}
 
-        return( g );
-    }
+		dna.add(c);
+	}
 
-    public double fitness() {
-        double wjs = 0.0;
-        double g   = 0.0;
+	public double weight() {
+		double g = 0.0;
 
-        for ( int j = 0; j < dna.size(); j++ ) {
-            g += Math.pow( ( (Chromosom) dna.get( j ) ).weight() / bpp.wmax, 2 );
-        }
+		for (int j = 0; j < dna.size(); j++) {
+			g += (dna.get(j)).weight();
+		}
 
-        g = g / dna.size();
-        
-        return( g );
-    }
+		return (g);
+	}
 
-    public void mutate() {
-        /**
-         * Zufällig zwei Chromosome auswählen,
-         * von jedem Gen zufällig ein Chromosm auswählen
-         * falls die ausgewählten Gene im anderen Chromosom noch Platz haben
-         * werden diese vertauscht
-         */
+	public double fitness() {
+		double g = 0.0;
 
-        int a, b;
-        Chromosom ca = (Chromosom) dna.get( a = bpp.rand.nextInt( dna.size() ) );
-        Chromosom cb = (Chromosom) dna.get( b = bpp.rand.nextInt( dna.size() ) );
+		for (int j = 0; j < dna.size(); j++) {
+			g += Math.pow(dna.get(j).weight() / bpp.wmax, 2);
+		}
 
-        if( ca != cb ) {
-            // Nur bei verschiedenen Chromosomen mutieren
+		g = g / dna.size();
 
-            // Jetzt zwei zufällige Gene auswählen
-            int ga = ca.get( bpp.rand.nextInt( ca.size() ) );
-            int gb = cb.get( bpp.rand.nextInt( cb.size() ) );
+		return (g);
+	}
 
-            if( ( bpp.data[ga] + cb.weight() - bpp.data[gb] <= bpp.wmax ) && ( bpp.data[gb] + ca.weight() - bpp.data[ga] <= bpp.wmax ) ) {
-                ca.remove( ga );
-                ca.add( gb );
+	public void mutate() {
+		/**
+		 * Zufällig zwei Chromosome auswählen, von jedem Gen zufällig ein
+		 * Chromosm auswählen falls die ausgewählten Gene im anderen Chromosom
+		 * noch Platz haben werden diese vertauscht
+		 */
 
-                cb.remove( gb );
-                cb.add( ga );
-            }
-        }
-    }
+		Chromosom ca = dna.get(bpp.rand.nextInt(dna.size()));
+		Chromosom cb = dna.get(bpp.rand.nextInt(dna.size()));
 
-    public void init() {
-        Pool pool = new Pool( bpp.n );
-        Chromosom c = new Chromosom();
-        int i;
+		if (ca != cb) {
+			// Nur bei verschiedenen Chromosomen mutieren
 
-        dna.clear();
-        
-        for ( int j = 0; j < bpp.n; j++ ) {
-            i = pool.nextInt();
-            
-            if( c.weight() + bpp.data[i] > bpp.wmax ) {
-                dna.add( c );
-                c = new Chromosom();
-            }
-            
-            c.add( i );
-        }
+			// Jetzt zwei zufällige Gene auswählen
+			int ga = ca.get(bpp.rand.nextInt(ca.size()));
+			int gb = cb.get(bpp.rand.nextInt(cb.size()));
 
-        dna.add( c );
-    }
+			if ((bpp.data[ga] + cb.weight() - bpp.data[gb] <= bpp.wmax)
+					&& (bpp.data[gb] + ca.weight() - bpp.data[ga] <= bpp.wmax)) {
+				ca.remove(ga);
+				ca.add(gb);
 
-    public String toString() {
-        String out;
-        Chromosom c;
-        
-        out = "Fitness: " + fitness() + ", Size: " + dna.size() + ", Dna: ";
-        
-        for( int j = 0; j < dna.size(); ++j ) {
-            c = (Chromosom) dna.get( j );
+				cb.remove(gb);
+				cb.add(ga);
+			}
+		}
+	}
 
-            if( j > 0 )
-                out += " | " + c.toString();
-            else
-                out += c.toString();
-        }
+	public void init() {
+		Pool pool = new Pool(bpp.n);
+		Chromosom c = new Chromosom();
+		int i;
 
-        return( out );
-    }
+		dna.clear();
 
-    public Object clone() {
-        Dna d = new Dna( false );
-        
-        for( int j = 0; j < dna.size(); ++j ) {
-            d.dna = (Vector) dna.clone();
-        }
-        
-        return( d );
-    }
+		for (int j = 0; j < bpp.n; j++) {
+			i = pool.nextInt();
 
-    public int[] toArray() {
-        int a[] = new int[bpp.n];
-        int b[];
-        int l = 0;
+			if (c.weight() + bpp.data[i] > bpp.wmax) {
+				dna.add(c);
+				c = new Chromosom();
+			}
 
-        for( int j = 0; j < dna.size(); ++j ) {
-            b = ( (Chromosom) dna.get( j ) ).toArray();
-            
-            for( int i = 0; i < b.length; ++i ) {
-                a[l] = b[i];
-                ++l;
-            }
-        }
+			c.add(i);
+		}
 
-        return a;
-    }
+		dna.add(c);
+	}
 
-    public void repair() {
-        Chromosom c;
-        boolean f[] = new boolean[bpp.n];
-        int i, j, l;
-        int n[];
-        
-        // doppelte entfernen
-        for( i = 0; i < dna.size(); ++i ) {
-            c = (Chromosom) dna.get( i );
+	public String toString() {
+		String out;
+		Chromosom c;
 
-            j = 0;
-            while( j < c.size() ) {
-                l = c.get( j );
+		out = "Fitness: " + fitness() + ", Size: " + dna.size() + ", Dna: ";
 
-                if( f[l] ) {
-                    c.remove( l );
-                }
-                else
-                    j++;
+		for (int j = 0; j < dna.size(); ++j) {
+			c = dna.get(j);
 
-                f[l] = true;
-            }
-        }
+			if (j > 0)
+				out += " | " + c.toString();
+			else
+				out += c.toString();
+		}
 
-        // leere chromosome entfernen
-        i = 0;
-        while( i < dna.size() ) {
-            c = (Chromosom) dna.get( i );
-            
-            if( c.size() == 0 ) {
-                dna.remove( c );
-            }
-            else
-                i++;
-        }
+		return (out);
+	}
 
-        // fehlende wieder einfügen
-        for( i = 0; i < bpp.n; ++i ) {
-            if( !f[i] ) {
-                c = null;
-                
-                for( j = 0; j < dna.size(); ++j ) {
-                    c = (Chromosom) dna.get( j );
+	public Object clone() {
+		Dna d = new Dna(false);
 
-                    if( c.weight() + bpp.data[i] <= bpp.wmax )
-                        break;
-                }
+		for (int j = 0; j < dna.size(); ++j) {
+			d.dna = (Vector<Chromosom>) dna.clone();
+		}
 
-                if( ( c == null ) || ( c.weight() + bpp.data[i] > bpp.wmax ) ) {
-                    c = new Chromosom();
-                    dna.add( c );
-                }
+		return (d);
+	}
 
-                c.add( i );
-            }
-        }
-    }
-    
-    static public Dna recombine_a( Dna a, Dna b ) {
-        Dna c;
-        int n[] = new int[bpp.n];
-        int as[] = a.toArray(), bs[] = b.toArray();
-        
-        int x = bpp.rand.nextInt( bpp.n );
-        int y = bpp.rand.nextInt( bpp.n );
-        int i;
+	public int[] toArray() {
+		int a[] = new int[bpp.n];
+		int b[];
+		int l = 0;
 
-        if( x > y ) {
-            int h = x;
-            x = y;
-            y = h;
-        }
+		for (int j = 0; j < dna.size(); ++j) {
+			b = dna.get(j).toArray();
 
-        // Chromosome vor dem 1. Crossover-Punkt von a nach c übernehmen
-        for( i = 0; i < x; ++i ) {
-            n[i] = as[i];
-        }
+			for (int i = 0; i < b.length; ++i) {
+				a[l] = b[i];
+				++l;
+			}
+		}
 
-        // Im Crossover-Bereich von b nach c übernehmen
-        for( ; i < y; ++i ) {
-            n[i] = bs[i];
-        }
+		return a;
+	}
 
-        // Restliche Chromosome aus a nach c übernehmen
-        for( ; i < bpp.n; ++i ) {
-            n[i] = as[i];
-        }
+	public void repair() {
+		Chromosom c;
+		boolean f[] = new boolean[bpp.n];
+		int i, j, l;
 
-        // Die so erzeugte Lösung wird jetzt wieder in eine Dna verpackt
-        c = new Dna( n );
+		// doppelte entfernen
+		for (i = 0; i < dna.size(); ++i) {
+			c = dna.get(i);
 
-        // Lösung könnte ungültig sein
-        c.repair();
-        
-        return( c );
-    }
+			j = 0;
+			while (j < c.size()) {
+				l = c.get(j);
 
-    static public Dna recombine_b( Dna a, Dna b ) {
-        Dna c = new Dna( false );
+				if (f[l]) {
+					c.remove(l);
+				} else
+					j++;
 
-        int i, as, bs;
-        
-        as = a.dna.size();
-        bs = b.dna.size();
-        
-        // für jedes Chromosom entscheiden von welcher Dna es übernommen wird
+				f[l] = true;
+			}
+		}
 
-        i = 0;
-        while( ( i < as ) && ( i < bs ) ) {
-            if( bpp.rand.nextDouble() < 0.5 ) {
-                c.dna.add( ( (Chromosom)a.dna.get( i ) ).clone() );
-            }
-            else {
-                c.dna.add( ((Chromosom)b.dna.get( i )).clone() );
-            }
-        }
+		// leere chromosome entfernen
+		i = 0;
+		while (i < dna.size()) {
+			c = dna.get(i);
 
-        // Lösung reparieren
+			if (c.size() == 0) {
+				dna.remove(c);
+			} else
+				i++;
+		}
 
-        c.repair();
-        return( c );
-    }
+		// fehlende wieder einfügen
+		for (i = 0; i < bpp.n; ++i) {
+			if (!f[i]) {
+				c = null;
+
+				for (j = 0; j < dna.size(); ++j) {
+					c = dna.get(j);
+
+					if (c.weight() + bpp.data[i] <= bpp.wmax)
+						break;
+				}
+
+				if ((c == null) || (c.weight() + bpp.data[i] > bpp.wmax)) {
+					c = new Chromosom();
+					dna.add(c);
+				}
+
+				c.add(i);
+			}
+		}
+	}
+
+	static public Dna recombine_a(Dna a, Dna b) {
+		Dna c;
+		int n[] = new int[bpp.n];
+		int as[] = a.toArray(), bs[] = b.toArray();
+
+		int x = bpp.rand.nextInt(bpp.n);
+		int y = bpp.rand.nextInt(bpp.n);
+		int i;
+
+		if (x > y) {
+			int h = x;
+			x = y;
+			y = h;
+		}
+
+		// Chromosome vor dem 1. Crossover-Punkt von a nach c übernehmen
+		for (i = 0; i < x; ++i) {
+			n[i] = as[i];
+		}
+
+		// Im Crossover-Bereich von b nach c übernehmen
+		for (; i < y; ++i) {
+			n[i] = bs[i];
+		}
+
+		// Restliche Chromosome aus a nach c �bernehmen
+		for (; i < bpp.n; ++i) {
+			n[i] = as[i];
+		}
+
+		// Die so erzeugte L�sung wird jetzt wieder in eine Dna verpackt
+		c = new Dna(n);
+
+		// L�sung k�nnte ung�ltig sein
+		c.repair();
+
+		return (c);
+	}
+
+	static public Dna recombine_b(Dna a, Dna b) {
+		Dna c = new Dna(false);
+
+		int i, as, bs;
+
+		as = a.dna.size();
+		bs = b.dna.size();
+
+		// f�r jedes Chromosom entscheiden von welcher Dna es �bernommen wird
+
+		i = 0;
+		while ((i < as) && (i < bs)) {
+			if (bpp.rand.nextDouble() < 0.5) {
+				c.dna.add((Chromosom) a.dna.get(i).clone());
+			} else {
+				c.dna.add((Chromosom) b.dna.get(i).clone());
+			}
+		}
+
+		// L�sung reparieren
+
+		c.repair();
+		return (c);
+	}
 }

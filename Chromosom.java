@@ -1,10 +1,10 @@
 import java.util.*;
 
 class Chromosom extends Object implements Cloneable {
-    Vector gens;
+    Vector<Integer> gens;
     
     public Chromosom() {
-        gens = new Vector();
+        gens = new Vector<Integer>();
     }
 
     public double weight() {
