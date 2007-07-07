@@ -118,6 +118,7 @@ class Dna extends Object implements Cloneable {
 		return (out);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Object clone() {
 		Dna d = new Dna(false);

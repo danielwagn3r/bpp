@@ -1,79 +1,79 @@
 import java.util.*;
 
 class Chromosom extends Object implements Cloneable {
-    Vector<Integer> gens;
-    
-    public Chromosom() {
-        gens = new Vector<Integer>();
-    }
+	Vector<Integer> gens;
 
-    public double weight() {
-        double g = 0.0;
-        
-        for( int j = 0; j < gens.size(); ++j ) {
-            g += bpp.data[( gens.get( j ) ).intValue()];
-        }
+	public Chromosom() {
+		gens = new Vector<Integer>();
+	}
 
-        return( g );
-    }
+	public double weight() {
+		double g = 0.0;
 
-    public void add( int i ) {
-        gens.add( new Integer( i ) );
-    }
+		for (int j = 0; j < gens.size(); ++j) {
+			g += bpp.data[(gens.get(j)).intValue()];
+		}
 
-    public void remove( int i ) {
-        Integer g;
+		return (g);
+	}
 
-        for( int j = 0; j < gens.size(); ++j ) {
-            g = gens.get( j );
+	public void add(int i) {
+		gens.add(new Integer(i));
+	}
 
-            if( g.intValue() == i ) {
-                gens.remove( g );
-            }
-        }
-    }
+	public void remove(int i) {
+		Integer g;
 
-    public int get( int i ) {
-        return ( gens.get( i ) ).intValue();
-    }
+		for (int j = 0; j < gens.size(); ++j) {
+			g = gens.get(j);
 
-    public int size() {
-        return( gens.size() );
-    }
-
-    @Override
-	public String toString() {
-        String out = "";
-        
-        for( int j = 0; j < gens.size(); ++j ) {
-            if( j > 0 ) {
-				out += " " + gens.get( j );
-			} else {
-				out += gens.get( j );
+			if (g.intValue() == i) {
+				gens.remove(g);
 			}
-        }
+		}
+	}
 
-        return( out );
-    }
+	public int get(int i) {
+		return (gens.get(i)).intValue();
+	}
 
-    @Override
+	public int size() {
+		return (gens.size());
+	}
+
+	@Override
+	public String toString() {
+		String out = "";
+
+		for (int j = 0; j < gens.size(); ++j) {
+			if (j > 0) {
+				out += " " + gens.get(j);
+			} else {
+				out += gens.get(j);
+			}
+		}
+
+		return (out);
+	}
+
+	@Override
 	public Object clone() {
-        Chromosom c = new Chromosom();
+		Chromosom c = new Chromosom();
 
-        for( int j = 0; j < gens.size(); ++j ) {
-            c.add( get( j ) );
-        }
+		for (int j = 0; j < gens.size(); ++j) {
+			c.add(get(j));
+		}
 
-        return( c );
-    }
+		return (c);
+	}
 
-    public int[] toArray() {
-        int a[] = new int[gens.size()];
+	public int[] toArray() {
+		int a[] = new int[gens.size()];
 
-        for( int i = 0; i < gens.size(); ++i ) {
-            a[i] = get( i );
-        }
+		for (int i = 0; i < gens.size(); ++i) {
+			a[i] = get(i);
+		}
 
-        return a;
-    }
+		return a;
+	}
 }
