@@ -1,9 +1,30 @@
-package org.kwaxi.jbpp;
+/*
+ *  JBpp - A Bin Packer in Java
+ *  
+ *  Copyright (C) 2007  Daniel Wagner <dwkwaxi@gmail.com>
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *  
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *  
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  
+ *  $Id$
+ */
 
-import gnu.getopt.*;
+package org.kwaxi.jbpp;
 
 import java.io.*;
 import java.util.*;
+
+import org.apache.commons.cli.*;
 
 public class JBpp {
 
@@ -25,162 +46,181 @@ public class JBpp {
 	static Dna[] pop;
 
 	public static void main(String[] args) {
-		int c;
-		String arg;
-		boolean nflag = false, eflag = false, gflag = false, mflag = false, pflag = false, rflag = false, sflag = false, lflag = false;
 		rand = new Random();
 
-		// Parameter von Commandozeile auswerten
+		// create the command line parser
+		CommandLineParser parser = new PosixParser();
 
-		LongOpt[] longopts = new LongOpt[7];
+		// create the Options
+		Options options = new Options();
 
-		longopts[0] = new LongOpt("help", LongOpt.NO_ARGUMENT, null, 'h');
-		longopts[1] = new LongOpt("population", LongOpt.REQUIRED_ARGUMENT,
-				null, 'p');
-		longopts[2] = new LongOpt("generations", LongOpt.REQUIRED_ARGUMENT,
-				null, 'g');
-		longopts[3] = new LongOpt("pressure", LongOpt.REQUIRED_ARGUMENT, null,
-				's');
-		longopts[4] = new LongOpt("mutprop", LongOpt.REQUIRED_ARGUMENT, null,
-				'm');
-		longopts[4] = new LongOpt("mutrate", LongOpt.REQUIRED_ARGUMENT, null,
-				'n');
-		longopts[5] = new LongOpt("recombprop", LongOpt.REQUIRED_ARGUMENT,
-				null, 'r');
-		longopts[6] = new LongOpt("recombalg", LongOpt.REQUIRED_ARGUMENT, null,
-				'l');
-		longopts[6] = new LongOpt("elitism", LongOpt.REQUIRED_ARGUMENT, null,
-				'e');
+		options.addOption(OptionBuilder
+				.hasArg()
+				.withArgName("int")
+				.withLongOpt("generations")
+				.withDescription("Number of generations [default: 50]")
+				.create());
 
-		Getopt g = new Getopt("bpp", args, "hep:g:s:m:r:l:n:", longopts);
+		options.addOption(OptionBuilder	
+				.hasArg()
+				.withArgName("int")
+				.withLongOpt("mutrate")
+				.withDescription("Mutation rate [default: 1]")
+				.create());
 
-		if (args.length >= 1) {
-			while ((c = g.getopt()) != -1) {
-				switch (c) {
-				case 'g':
-					if (gflag) {
-						usage();
-					} else {
-						arg = g.getOptarg();
-						gen = (new Integer(arg)).intValue();
-						gflag = true;
-					}
+		options.addOption(OptionBuilder	
+				.hasArg()
+				.withArgName("double")
+				.withLongOpt("mutprop")
+				.withDescription("Mutation propability [default: 0.5]")
+				.create());
 
-					break;
+		options.addOption(OptionBuilder
+				.hasArg()
+				.withArgName("int")
+				.withLongOpt("populationsize")
+				.withDescription("Size of population [default: 20]")
+				.create());
 
-				case 'n':
-					if (nflag) {
-						usage();
-					} else {
-						arg = g.getOptarg();
-						mr = (new Integer(arg)).intValue();
-						nflag = true;
-					}
+		options.addOption(OptionBuilder
+				.hasArg()
+				.withArgName("a|b")
+				.withLongOpt("recombalg")
+				.withDescription("Recombination algorithm [default: a]")
+				.create());
 
-					break;
+//		options.addOption(OptionBuilder
+//				.hasArg()
+//				.withArgName("int")
+//				.withLongOpt("recombrate")
+//				.withDescription("Recombination rate [default: 1]")
+//				.create());
 
-				case 'l':
-					if (lflag) {
-						usage();
-					} else {
-						arg = g.getOptarg();
+		options.addOption(OptionBuilder
+				.hasArg()
+				.withArgName("double")
+				.withLongOpt("recombprop")
+				.withDescription("Recombination propability [default: 0.8]")
+				.create());
 
-						if (arg.equals("b")) {
-							sel = 'a';
-						} else if (arg.equals("b")) {
-							sel = 'b';
-						}
-						lflag = true;
-					}
+		options.addOption(OptionBuilder
+				.hasArg()
+				.withArgName("int")
+				.withLongOpt("selectionpressure")
+				.withDescription("Selection pressure [default: 4]")
+				.create());
 
-					break;
+		options.addOption(OptionBuilder
+				.hasArg()
+				.withArgName("bool")
+				.withLongOpt("elitism")
+				.withDescription("Enable Elitism [default: 1]")
+				.create());
 
-				case 'm':
-					if (mflag) {
-						usage();
-					} else {
-						arg = g.getOptarg();
-						mp = (new Double(arg)).doubleValue();
-						mflag = true;
-					}
+		options.addOption(OptionBuilder
+				.hasArg()
+				.withArgName("file")
+				//.isRequired()
+				.withLongOpt("datafile")
+				.withDescription("Problem data file [default: \"binpack.txt\"]")
+				.create());
 
-					break;
+		options.addOptionGroup(
+				new OptionGroup()
+				.addOption(OptionBuilder
+						.withLongOpt("verbose")
+						.withDescription("be extra verbose")
+						.create())
+				.addOption(OptionBuilder
+						.withLongOpt("quiet")
+						.withDescription("be extra quiet")
+						.create()));
 
-				case 'p':
-					if (pflag) {
-						usage();
-					} else {
-						arg = g.getOptarg();
-						ps = (new Integer(arg)).intValue();
-						pflag = true;
-					}
+		options.addOption(OptionBuilder
+				.withLongOpt("version")
+				.withDescription("print the version information and exit")
+				.create());
 
-					break;
+		options.addOption(OptionBuilder
+				.withLongOpt("help")
+				.withDescription("print this message")
+				.create());
 
-				case 'r':
-					if (rflag) {
-						usage();
-					} else {
-						arg = g.getOptarg();
-						rp = (new Double(arg)).doubleValue();
-						rflag = true;
-					}
+		try {
+			// parse the command line arguments
+			CommandLine line = parser.parse(options, args);
 
-					break;
-
-				case 's':
-					if (sflag) {
-						usage();
-					} else {
-						arg = g.getOptarg();
-						sp = (new Integer(arg)).intValue();
-						sflag = true;
-					}
-
-					break;
-
-				case 'e':
-					if (eflag) {
-						usage();
-					} else {
-						elitism = true;
-						eflag = true;
-					}
-
-					break;
-
-				case 'h':
-				case '?':
-					usage();
-					break;
-
-				default:
-					usage();
-					break;
-				}
+			// validate that block-size has been set
+			if (line.hasOption("help")) {
+				// automatically generate the help statement
+				HelpFormatter formatter = new HelpFormatter();
+				formatter.printHelp("JBpp", options);
+				
+				System.exit(0);
+			}
+			
+			if (line.hasOption("version")) {
+				System.out.println("JBpp 0.1 (c) 2007 by Daniel Wagner");
+			}
+			
+			if (line.hasOption("datafile")) {
+				fname = line.getOptionValue("datafile");
 			}
 
-			if (g.getOptind() < args.length) {
-				fname = args[g.getOptind()];
-			} else {
-				usage();
+			if (line.hasOption("elitism")) {
+				elitism = Boolean.parseBoolean( line.getOptionValue("elitism") );
 			}
-		} else {
-			usage();
+
+			if (line.hasOption("generations")) {
+				gen = Integer.parseInt( line.getOptionValue("generations") );
+			}
+			
+			if (line.hasOption("mutprop")) {
+				mp = Double.parseDouble( line.getOptionValue("mutprop") );
+			}
+
+			if (line.hasOption("mutrate")) {
+				mr = Integer.parseInt( line.getOptionValue("mutrate") );
+			}
+
+			if (line.hasOption("populationsize")) {
+				ps = Integer.parseInt( line.getOptionValue("populationsize") );
+			}
+
+			if (line.hasOption("recombalg")) {
+				sel = line.getOptionValue("recombalg").charAt(0);
+			}
+
+			if (line.hasOption("recombprop")) {
+				rp = Double.parseDouble( line.getOptionValue("recombprop") );
+			}
+
+			if (line.hasOption("selectionpressure")) {
+				sp = Integer.parseInt( line.getOptionValue("selectionpressure") );
+			}
+
+		} catch (ParseException exp) {
+			System.out.println("Unexpected exception:" + exp.getMessage());
+
+			// automatically generate the help statement
+			HelpFormatter formatter = new HelpFormatter();
+			formatter.printHelp("JBpp", options);
+			
+			System.exit(1);
 		}
 
 		// Ausgabe der eingestellten Optionen
 
-		System.out.println("bpp: Options");
+		System.out.println("JBpp: configuration");
+		System.out.println("  Datafile:                  " + fname);
 		System.out.println("  Generations:               " + gen);
-		System.out.println("  Mutation-Propapility:      " + mp);
-		System.out.println("  Mutation-Rate:             " + mr);
-		System.out.println("  Size of population:        " + ps);
-		System.out.println("  Recombination-Propapility: " + rp);
-		System.out.println("  Recombination-Algorithm    " + (char) sel);
-		System.out.println("  Selection-Pressure:        " + sp);
+		System.out.println("  Population size:           " + ps);
 		System.out.println("  Elitism:                   " + elitism);
-		System.out.println("  File:                      " + fname);
+		System.out.println("  Mutation propapility:      " + mp);
+		System.out.println("  Mutation rate:             " + mr);
+		System.out.println("  Recombination algorithm    " + (char) sel);
+		System.out.println("  Recombination propapility: " + rp);
+		System.out.println("  Selection pressure:        " + sp);
 		System.out.println();
 
 		// Daten laden
@@ -242,36 +282,6 @@ public class JBpp {
 		System.out.println("  Maximum: " + max);
 		System.out.println("  Average: " + avg);
 		System.out.println();
-	}
-
-	static void usage() {
-		System.out.println("Usage: bpp [Options] file");
-
-		System.out.println("\nOptions:\n");
-		System.out
-				.println("  -g, --generations <int>             Count of generations [Default: 50]");
-		System.out
-				.println("  -m, --mutprop <double>              Mutation-Propability [Default: 0.5]");
-		System.out
-				.println("  -n, --mutrate <int>                 Mutation-Rate [Default: 1]");
-		System.out
-				.println("  -p, --populationsize <int>          Size of population [Default: 20]");
-		System.out
-				.println("  -r, --recombprop <double>           Recombination-Propability [Default: 0.8]");
-		System.out
-				.println("  -l, --recombalg <a|b>               Recombination-Algorithm [Default: a]");
-		System.out
-				.println("  -s, --pressure <int>                Selection-Pressure [Default: 4]");
-		System.out
-				.println("  -e, --elitism                       Elitism [Default: false]");
-		System.out
-				.println("  -h, --help                          Display this help screen");
-
-		System.out.println("\nArguments:\n");
-		System.out
-				.println("  file                                File to load");
-
-		System.exit(1);
 	}
 
 	static void load() {
@@ -380,7 +390,8 @@ public class JBpp {
 		// In jeder Generation 'mr' Mutationen versuchen
 
 		for (int i = 0; i < mr; ++i) {
-			// Mit Wahrscheinlichkeit 'mp' an einer zufälligen Dna eine Mutation durchführen
+			// Mit Wahrscheinlichkeit 'mp' an einer zufälligen Dna eine Mutation
+			// durchführen
 
 			if (rand.nextDouble() < mp) {
 				pop[rand.nextInt(ps)].mutate();
