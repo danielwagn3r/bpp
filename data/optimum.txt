@@ -1,0 +1,4 @@
+# binpack1-1.txt (Optimum: 48)
+# binpack2-1.txt (Optimum: 99)
+# binpack5-1.txt (Optimum: 20)
+# binpack6-1.txt (Optimum: 40)
