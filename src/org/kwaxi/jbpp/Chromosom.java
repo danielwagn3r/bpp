@@ -1,3 +1,5 @@
+package org.kwaxi.jbpp;
+
 import java.util.*;
 
 class Chromosom extends Object implements Cloneable {
@@ -11,7 +13,7 @@ class Chromosom extends Object implements Cloneable {
 		double g = 0.0;
 
 		for (int j = 0; j < gens.size(); ++j) {
-			g += bpp.data[(gens.get(j)).intValue()];
+			g += JBpp.data[(gens.get(j)).intValue()];
 		}
 
 		return (g);

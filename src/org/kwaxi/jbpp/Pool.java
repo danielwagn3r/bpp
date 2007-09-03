@@ -1,3 +1,5 @@
+package org.kwaxi.jbpp;
+
 class Pool {
 	boolean[] pool;
 	int size;
@@ -27,10 +29,10 @@ class Pool {
 
 	public int nextInt() {
 		if ((pool != null) && (taken < size)) {
-			int i = bpp.rand.nextInt(size);
+			int i = JBpp.rand.nextInt(size);
 
 			while (pool[i]) {
-				i = bpp.rand.nextInt(size);
+				i = JBpp.rand.nextInt(size);
 			}
 
 			pool[i] = true;

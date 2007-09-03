@@ -1,9 +1,11 @@
+package org.kwaxi.jbpp;
+
 import gnu.getopt.*;
 
 import java.io.*;
 import java.util.*;
 
-public class bpp {
+public class JBpp {
 
 	static int gen = 50;
 	static int sp = 4;
