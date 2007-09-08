@@ -30,6 +30,23 @@ class Pool {
 		setSize(nsize);
 	}
 
+	public int nextInt() {
+		if ((pool != null) && (taken < size)) {
+			int i = JBpp.rand.nextInt(size);
+
+			while (pool[i]) {
+				i = JBpp.rand.nextInt(size);
+			}
+
+			pool[i] = true;
+			taken++;
+
+			return i;
+		} else {
+			return (-1);
+		}
+	}
+
 	public void reset() {
 		taken = 0;
 
@@ -45,23 +62,6 @@ class Pool {
 
 		for (int i = 0; i < size; ++i) {
 			pool[i] = false;
-		}
-	}
-
-	public int nextInt() {
-		if ((pool != null) && (taken < size)) {
-			int i = JBpp.rand.nextInt(size);
-
-			while (pool[i]) {
-				i = JBpp.rand.nextInt(size);
-			}
-
-			pool[i] = true;
-			taken++;
-
-			return i;
-		} else {
-			return (-1);
 		}
 	}
 }

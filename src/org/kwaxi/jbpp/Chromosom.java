@@ -21,7 +21,7 @@
 
 package org.kwaxi.jbpp;
 
-import java.util.*;
+import java.util.Vector;
 
 class Chromosom extends Object implements Cloneable {
 	Vector<Integer> gens;
@@ -30,18 +30,23 @@ class Chromosom extends Object implements Cloneable {
 		gens = new Vector<Integer>();
 	}
 
-	public double weight() {
-		double g = 0.0;
-
-		for (int j = 0; j < gens.size(); ++j) {
-			g += JBpp.data[(gens.get(j)).intValue()];
-		}
-
-		return (g);
-	}
-
 	public void add(int i) {
 		gens.add(new Integer(i));
+	}
+
+	@Override
+	public Object clone() {
+		Chromosom c = new Chromosom();
+
+		for (int j = 0; j < gens.size(); ++j) {
+			c.add(get(j));
+		}
+
+		return (c);
+	}
+
+	public int get(int i) {
+		return (gens.get(i)).intValue();
 	}
 
 	public void remove(int i) {
@@ -56,12 +61,18 @@ class Chromosom extends Object implements Cloneable {
 		}
 	}
 
-	public int get(int i) {
-		return (gens.get(i)).intValue();
-	}
-
 	public int size() {
 		return (gens.size());
+	}
+
+	public int[] toArray() {
+		int a[] = new int[gens.size()];
+
+		for (int i = 0; i < gens.size(); ++i) {
+			a[i] = get(i);
+		}
+
+		return a;
 	}
 
 	@Override
@@ -79,24 +90,13 @@ class Chromosom extends Object implements Cloneable {
 		return (out);
 	}
 
-	@Override
-	public Object clone() {
-		Chromosom c = new Chromosom();
+	public double weight() {
+		double g = 0.0;
 
 		for (int j = 0; j < gens.size(); ++j) {
-			c.add(get(j));
+			g += JBpp.data[(gens.get(j)).intValue()];
 		}
 
-		return (c);
-	}
-
-	public int[] toArray() {
-		int a[] = new int[gens.size()];
-
-		for (int i = 0; i < gens.size(); ++i) {
-			a[i] = get(i);
-		}
-
-		return a;
+		return (g);
 	}
 }
