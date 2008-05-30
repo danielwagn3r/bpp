@@ -198,6 +198,14 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<formats>
+						<format>html</format>
+						<format>xml</format>
+						<!-- if you still want the HTML reports just add another format entry with html as the value -->
+					</formats>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
