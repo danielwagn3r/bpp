@@ -112,6 +112,9 @@
 							net.sourceforge.pmd.runtime.pmdNature
 						</projectnature>
 						<projectnature>
+							com.stateofflow.eclipse.metrics.MetricsNature
+						</projectnature>
+						<projectnature>
 							org.devzuz.q.maven.jdt.core.mavenNature
 						</projectnature>
 					</additionalProjectnatures>
@@ -124,6 +127,9 @@
 						</buildcommand>
 						<buildcommand>
 							net.sourceforge.pmd.runtime.pmdBuilder
+						</buildcommand>
+						<buildcommand>
+							com.stateofflow.eclipse.metrics.MetricsBuilder
 						</buildcommand>
 						<buildcommand>
 							org.devzuz.q.maven.jdt.core.mavenIncrementalBuilder
