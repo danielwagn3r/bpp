@@ -1,26 +1,147 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.kwaxi</groupId>
 	<artifactId>bpp</artifactId>
-	<packaging>jar</packaging>
-	<version>1.0-SNAPSHOT</version>
 	<name>bpp</name>
+	<version>1.0-SNAPSHOT</version>
 	<url>http://maven.apache.org</url>
+
+	<developers>
+		<developer>
+			<id>Daniel</id>
+			<name>Daniel Wagner</name>
+			<email>dwkwaxi@gmail.com</email>
+			<organization>Cemetery</organization>
+			<organizationUrl>http://www.cemetery.lan</organizationUrl>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+
 	<scm>
-		<connection>scm:svn:http://beigesding/svn/studium/bpp/trunk/</connection>
+		<connection>
+			scm:svn:http://beigesding/svn/private/studium/bpp/trunk/
+		</connection>
 		<developerConnection>
-			scm:svn:http://beigesding/svn/studium/bpp/trunk/
+			scm:svn:http://beigesding/svn/private/studium/bpp/trunk/
 		</developerConnection>
-		<tag>HEAD</tag>
-		<url>http://beigesding/svn/studium/bpp</url>
+		<url>http://beigesding/svn/private/studium/bpp</url>
 	</scm>
+
+	<organization>
+		<name>Cemetery</name>
+		<url>http://www.cemetery.lan</url>
+	</organization>
+
+	<build>
+		<finalName>jbpp</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<addDefaultImplementationEntries>
+								true
+							</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>
+								true
+							</addDefaultSpecificationEntries>
+							<addExtensions>true</addExtensions>
+							<classpathPrefix>lib/</classpathPrefix>
+							<mainClass>org.kwaxi.jbpp.JBpp</mainClass>
+						</manifest>
+						<manifestEntries>
+							<url>${pom.url}</url>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<configuration>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>true</downloadJavadocs>
+					<additionalProjectnatures>
+						<projectnature>
+							com.atlassw.tools.eclipse.checkstyle.CheckstyleNature
+						</projectnature>
+						<projectnature>
+							edu.umd.cs.findbugs.plugin.eclipse.findbugsNature
+						</projectnature>
+						<projectnature>
+							net.sourceforge.pmd.runtime.pmdNature
+						</projectnature>
+						<projectnature>
+							org.devzuz.q.maven.jdt.core.mavenNature
+						</projectnature>
+					</additionalProjectnatures>
+					<additionalBuildcommands>
+						<buildcommand>
+							com.atlassw.tools.eclipse.checkstyle.CheckstyleBuilder
+						</buildcommand>
+						<buildcommand>
+							edu.umd.cs.findbugs.plugin.eclipse.findbugsBuilder
+						</buildcommand>
+						<buildcommand>
+							net.sourceforge.pmd.runtime.pmdBuilder
+						</buildcommand>
+						<buildcommand>
+							org.devzuz.q.maven.jdt.core.mavenIncrementalBuilder
+						</buildcommand>
+					</additionalBuildcommands>
+					<workspace>${basedir}</workspace>
+					<workspaceCodeStylesURL>
+						http://svn.apache.org/repos/asf/maven/plugins/trunk/maven-eclipse-plugin/src/optional/eclipse-config/maven-styles.xml
+					</workspaceCodeStylesURL>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
+			<version>4.4</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -34,16 +155,81 @@
 			<version>1.1.1</version>
 		</dependency>
 	</dependencies>
-	<build>
+
+	<reporting>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jdepend-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-pmd-plugin</artifactId>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<targetJdk>1.6</targetJdk>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<configuration>
+					<xmlOutput>true</xmlOutput>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>
+					maven-project-info-reports-plugin
+				</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jxr-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>taglist-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>javancss-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-changes-plugin</artifactId>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>changes-report</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+			<plugin>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+			</plugin>
 		</plugins>
-	</build>
+	</reporting>
+
+	<repositories>
+		<repository>
+			<id>central</id>
+			<url>http://beigesding:8080/artifactory/repo</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>central</id>
+			<url>http://beigesding:8080/artifactory/repo</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
 </project>
