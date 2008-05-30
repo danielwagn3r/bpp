@@ -21,12 +21,7 @@
 
 package org.kwaxi.jbpp;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Random;
-import java.util.StringTokenizer;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -41,96 +36,39 @@ import org.apache.commons.logging.LogFactory;
 
 public class JBpp {
 
+	/**
+	 * My Log class.
+	 */
 	private static Log log = LogFactory.getLog(JBpp.class);
 
-	static int gen = 50;
-	static int sp = 4;
-	static int ps = 20;
-	static double rp = 0.8;
-	static double mp = 0.5;
-	static int mr = 1;
-	static int sel = 'a';
-	static boolean elitism = false;
+	private static final int DEFAULT_GEN = 50;
+	private static final int DEFAULT_SP = 4;
+	private static final int DEFAULT_PS = 20;
+	private static final double DEFAULT_RP = 0.8;
+	private static final double DEFAULT_MP = 0.5;
+	private static final int DEFAULT_MR = 1;
+	private static final char DEFAULT_SEL = 'a';
+	private static final char DEFAULT_SELALG = 'a';
+	private static final boolean DEFAULT_ELITISM = false;
+
+	public static int gen = DEFAULT_GEN;
+	public static int sp = DEFAULT_SP;
+	public static int ps = DEFAULT_PS;
+	public static double rp = DEFAULT_RP;
+	public static double mp = DEFAULT_MP;
+	public static int mr = DEFAULT_MR;
+	public static char sel = DEFAULT_SEL;
+	public static char selalg = DEFAULT_SELALG;
+	public static boolean elitism = DEFAULT_ELITISM;
 	static String fname;
 
 	static double wmax;
 	static int n;
 
-	static double[] data;
-	static Random rand;
-	static Dna[] pop;
+	public static Instance instance;
+	public static Random rand = new Random();
 
-	static void init() {
-		log.debug("Initialisation");
-
-		pop = new Dna[ps];
-
-		for (int i = 0; i < ps; ++i) {
-			pop[i] = new Dna(true);
-		}
-	}
-
-	static void load() {
-		File file;
-		BufferedReader fileReader;
-		String line;
-
-		try {
-			file = new File(fname);
-
-			if (!file.exists()) {
-				log.fatal("File '" + fname + "' doesn't exist!");
-			} else if (!file.canRead()) {
-				log.fatal("File '" + fname + "' couldn't be read!");
-			} else {
-				fileReader = new BufferedReader(new FileReader(file));
-
-				line = fileReader.readLine();
-
-				StringTokenizer tokenizer = new StringTokenizer(line);
-
-				if (tokenizer.hasMoreTokens()) {
-					wmax = (new Double(tokenizer.nextToken())).doubleValue();
-				} else {
-					log.fatal("File '" + fname + "' currupted!");
-					System.exit(2);
-				}
-
-				if (tokenizer.hasMoreTokens()) {
-					n = (new Integer(tokenizer.nextToken())).intValue();
-				} else {
-					log.fatal("File '" + fname + "' currupted!");
-					System.exit(2);
-				}
-
-				log.info("File-Information");
-				log.info("  Wmax:                      " + wmax);
-				log.info("  n:                         " + n);
-
-				data = new double[n];
-
-				for (int i = 0; i < n; i++) {
-					line = fileReader.readLine();
-
-					tokenizer = new StringTokenizer(line);
-
-					if (tokenizer.hasMoreTokens()) {
-						data[i] = (new Double(tokenizer.nextToken()))
-								.doubleValue();
-					} else {
-						log.fatal("File '" + fname + "' currupted!");
-						System.exit(2);
-					}
-				}
-			}
-		} catch (IOException e) {
-			log.fatal(e.getMessage());
-			System.exit(2);
-		}
-	}
-
-	public static void main(String[] args) {
-		rand = new Random();
+	public static void main(final String[] args) {
 
 		// create the command line parser
 		CommandLineParser parser = new PosixParser();
@@ -168,6 +106,10 @@ public class JBpp {
 		options.addOption(OptionBuilder.hasArg().withArgName("double")
 				.withLongOpt("recombprop").withDescription(
 						"Recombination propability [default: 0.8]").create());
+
+		options.addOption(OptionBuilder.hasArg().withArgName("a")
+				.withLongOpt("selalg").withDescription(
+						"Selection algorithm [default: a]").create());
 
 		options.addOption(OptionBuilder.hasArg().withArgName("int")
 				.withLongOpt("selectionpressure").withDescription(
@@ -244,6 +186,10 @@ public class JBpp {
 				rp = Double.parseDouble(line.getOptionValue("recombprop"));
 			}
 
+			if (line.hasOption("selalg")) {
+				selalg = line.getOptionValue("selalg").charAt(0);
+			}
+
 			if (line.hasOption("selectionpressure")) {
 				sp = Integer.parseInt(line.getOptionValue("selectionpressure"));
 			}
@@ -272,123 +218,11 @@ public class JBpp {
 		log.info("  Selection pressure:        " + sp);
 
 		// Daten laden
-		load();
+		instance = new Instance();
+		instance.load(fname);
 
-		// Population initialisieren
-		init();
+		Evolutionizer e = new Evolutionizer(instance);
 
-		// Aktuelle Population ausgeben
-		population(true);
-
-		// Generationen durchlaufen
-		for (int i = 0; i < gen; i++) {
-			log.info("Generation " + i);
-
-			// Selektion
-			selection();
-
-			// Rekombination
-			recombination();
-
-			// Mutation
-			mutation();
-
-			// Aktuelle Population ausgeben
-			population(false);
-		}
-	}
-
-	static void mutation() {
-		// In jeder Generation 'mr' Mutationen versuchen
-
-		for (int i = 0; i < mr; ++i) {
-			// Mit Wahrscheinlichkeit 'mp' an einer zufälligen Dna eine Mutation
-			// durchführen
-
-			if (rand.nextDouble() < mp) {
-				pop[rand.nextInt(ps)].mutate();
-			}
-		}
-	}
-
-	static void population(boolean all) {
-		double fit = 0.0, avg = 0.0, sum = 0.0;
-		double max = Double.MIN_VALUE;
-		int best = 0;
-
-		log.info("Population");
-
-		for (int i = 0; i < ps; i++) {
-			if (all) {
-				log.info(pop[i].toString());
-			}
-
-			fit = pop[i].fitness();
-			sum += fit;
-
-			if (fit > max) {
-				max = fit;
-				best = i;
-			}
-		}
-
-		avg = sum / ps;
-
-		if (!all) {
-			log.info("  " + pop[best].toString());
-		}
-
-		log.info("  Maximum: " + max);
-		log.info("  Average: " + avg);
-		log.info("");
-	}
-
-	static void recombination() {
-		Dna npop[] = new Dna[ps];
-		int a, b;
-		int i = 0;
-
-		while (i < ps) {
-			a = rand.nextInt(ps);
-			b = rand.nextInt(ps);
-
-			if (rand.nextDouble() < rp) {
-				if (sel == 'a') {
-					npop[i] = Dna.recombine_a(pop[a], pop[b]);
-				} else {
-					npop[i] = Dna.recombine_b(pop[a], pop[b]);
-				}
-				++i;
-			}
-		}
-
-		pop = npop;
-	}
-
-	static void selection() {
-		Dna npop[] = new Dna[ps];
-		double fit = 0.0;
-		double max = Double.MIN_VALUE;
-		int best = 0, c;
-
-		// einfache tournament selection
-		for (int i = 0; i < ps; ++i) {
-			max = Double.MIN_VALUE;
-
-			for (int j = 0; j < sp; ++j) {
-				c = rand.nextInt(ps);
-
-				fit = pop[c].fitness();
-
-				if (fit > max) {
-					best = c;
-					max = fit;
-				}
-			}
-
-			npop[i] = (Dna) pop[best].clone();
-		}
-
-		pop = npop;
+		e.run();
 	}
 }

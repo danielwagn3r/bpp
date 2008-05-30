@@ -1,33 +1,45 @@
 /*
  *  JBpp - A Bin Packer in Java
- *  
+ *
  *  Copyright (C) 2007  Daniel Wagner <dwkwaxi@gmail.com>
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
- *  
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
- *  
+ *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- *  
+ *
  *  $Id$
  */
 
 package org.kwaxi.jbpp;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
-class Dna extends Object implements Cloneable {
-	static public Dna recombine_a(Dna a, Dna b) {
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+public class Dna extends Object implements Cloneable {
+
+	private static final double PROPABILITY = 0.5;
+
+	/**
+	 * My Log class.
+	 */
+	private static Log log = LogFactory.getLog(Dna.class);
+
+	public static Dna recombineVariantA(Dna a, Dna b) {
 		Dna c;
-		int n[] = new int[JBpp.n];
-		int as[] = a.toArray(), bs[] = b.toArray();
+		int[] n = new int[JBpp.n];
+		int[] as = a.toArray(), bs = b.toArray();
 
 		int x = JBpp.rand.nextInt(JBpp.n);
 		int y = JBpp.rand.nextInt(JBpp.n);
@@ -39,12 +51,12 @@ class Dna extends Object implements Cloneable {
 			y = h;
 		}
 
-		// Chromosome vor dem 1. Crossover-Punkt von a nach c übernehmen
+		// Chromosome vor dem 1. Crossover-Punkt von a nach c �bernehmen
 		for (i = 0; i < x; ++i) {
 			n[i] = as[i];
 		}
 
-		// Im Crossover-Bereich von b nach c übernehmen
+		// Im Crossover-Bereich von b nach c �bernehmen
 		for (; i < y; ++i) {
 			n[i] = bs[i];
 		}
@@ -57,13 +69,13 @@ class Dna extends Object implements Cloneable {
 		// Die so erzeugte L�sung wird jetzt wieder in eine Dna verpackt
 		c = new Dna(n);
 
-		// L�sung k�nnte ung�ltig sein
+		// Repair the solution.
 		c.repair();
 
 		return (c);
 	}
 
-	static public Dna recombine_b(Dna a, Dna b) {
+	public static Dna recombineVariantB(Dna a, Dna b) {
 		Dna c = new Dna(false);
 
 		int i, as, bs;
@@ -71,41 +83,49 @@ class Dna extends Object implements Cloneable {
 		as = a.dna.size();
 		bs = b.dna.size();
 
-		// f�r jedes Chromosom entscheiden von welcher Dna es �bernommen wird
-
+		// Decide from which Dna each Chromosome is chosen.
 		i = 0;
 		while ((i < as) && (i < bs)) {
-			if (JBpp.rand.nextDouble() < 0.5) {
-				c.dna.add((Chromosom) a.dna.get(i).clone());
-			} else {
-				c.dna.add((Chromosom) b.dna.get(i).clone());
+			try {
+				if (JBpp.rand.nextDouble() < PROPABILITY) {
+					c.dna.add((Chromosome) a.dna.get(i).clone());
+				} else {
+					c.dna.add((Chromosome) b.dna.get(i).clone());
+				}
+
+			} catch (CloneNotSupportedException e) {
+				log.fatal("Could not clone an object.", e);
 			}
 		}
 
-		// L�sung reparieren
-
+		// Repair the solution.
 		c.repair();
+
 		return (c);
 	}
 
-	Vector<Chromosom> dna;
+	private List<Chromosome> dna;
 
-	public Dna(boolean init) {
-		dna = new Vector<Chromosom>();
+	public Dna(final boolean init) {
+		super();
+
+		dna = new ArrayList<Chromosome>();
 
 		if (init) {
-			init();
+			initDna();
 		}
 	}
 
-	public Dna(int[] a) {
-		Chromosom c = new Chromosom();
-		dna = new Vector<Chromosom>();
+	public Dna(final int[] a) {
+		super();
+
+		Chromosome c = new Chromosome();
+		dna = new ArrayList<Chromosome>();
 
 		for (int j = 0; j < JBpp.n; j++) {
-			if (c.weight() + JBpp.data[a[j]] > JBpp.wmax) {
+			if (c.weight() + JBpp.instance.data[a[j]] > JBpp.wmax) {
 				dna.add(c);
-				c = new Chromosom();
+				c = new Chromosome();
 			}
 
 			c.add(a[j]);
@@ -114,18 +134,28 @@ class Dna extends Object implements Cloneable {
 		dna.add(c);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public Object clone() {
-		Dna d = new Dna(false);
+	public Object clone() throws CloneNotSupportedException {
 
-		for (int j = 0; j < dna.size(); ++j) {
-			d.dna = (Vector<Chromosom>) dna.clone();
-		}
+		return super.clone();
 
-		return (d);
+		/**
+		 * old version Chromosome c = new Chromosome();
+		 *
+		 * Dna d = new Dna(false);
+		 *
+		 * for (int j = 0; j < dna.size(); ++j) { d.dna = (Vector<Chromosome>)
+		 * dna.clone(); }
+		 *
+		 * return (d);
+		 */
 	}
 
+	/**
+	 * Computes the fitness.
+	 *
+	 * @return Objective value.
+	 */
 	public double fitness() {
 		double g = 0.0;
 
@@ -138,22 +168,25 @@ class Dna extends Object implements Cloneable {
 		return (g);
 	}
 
-	public void init() {
+	private void initDna() {
 		Pool pool = new Pool(JBpp.n);
-		Chromosom c = new Chromosom();
-		int i;
+		Chromosome c = new Chromosome();
 
 		dna.clear();
 
 		for (int j = 0; j < JBpp.n; j++) {
-			i = pool.nextInt();
+			try {
+				int i = pool.nextInt();
 
-			if (c.weight() + JBpp.data[i] > JBpp.wmax) {
-				dna.add(c);
-				c = new Chromosom();
+				if (c.weight() + JBpp.instance.data[i] > JBpp.wmax) {
+					dna.add(c);
+					c = new Chromosome();
+				}
+
+				c.add(i);
+			} catch (Exception e) {
+				log.error("Could not initialize Dna.", e);
 			}
-
-			c.add(i);
 		}
 
 		dna.add(c);
@@ -161,23 +194,24 @@ class Dna extends Object implements Cloneable {
 
 	public void mutate() {
 		/**
-		 * Zufällig zwei Chromosome auswählen, von jedem Gen zufällig ein
-		 * Chromosm auswählen falls die ausgewählten Gene im anderen Chromosom
+		 * Zuf�llig zwei Chromosome ausw�hlen, von jedem Gen zuf�llig ein
+		 * Chromosm ausw�hlen falls die ausgew�hlten Gene im anderen Chromosome
 		 * noch Platz haben werden diese vertauscht
 		 */
 
-		Chromosom ca = dna.get(JBpp.rand.nextInt(dna.size()));
-		Chromosom cb = dna.get(JBpp.rand.nextInt(dna.size()));
+		Chromosome ca = dna.get(JBpp.rand.nextInt(dna.size()));
+		Chromosome cb = dna.get(JBpp.rand.nextInt(dna.size()));
 
 		if (ca != cb) {
 			// Nur bei verschiedenen Chromosomen mutieren
 
-			// Jetzt zwei zufällige Gene auswählen
+			// Jetzt zwei zuf�llige Gene ausw�hlen
 			int ga = ca.get(JBpp.rand.nextInt(ca.size()));
 			int gb = cb.get(JBpp.rand.nextInt(cb.size()));
 
-			if ((JBpp.data[ga] + cb.weight() - JBpp.data[gb] <= JBpp.wmax)
-					&& (JBpp.data[gb] + ca.weight() - JBpp.data[ga] <= JBpp.wmax)) {
+			if ((JBpp.instance.data[ga] + cb.weight() - JBpp.instance.data[gb] <= JBpp.wmax)
+					&& (JBpp.instance.data[gb] + ca.weight()
+							- JBpp.instance.data[ga] <= JBpp.wmax)) {
 				ca.remove(ga);
 				ca.add(gb);
 
@@ -187,9 +221,12 @@ class Dna extends Object implements Cloneable {
 		}
 	}
 
+	/**
+	 * This method repairs a infeasible solution.
+	 */
 	public void repair() {
-		Chromosom c;
-		boolean f[] = new boolean[JBpp.n];
+		Chromosome c;
+		boolean[] f = new boolean[JBpp.n];
 		int i, j, l;
 
 		// doppelte entfernen
@@ -222,7 +259,7 @@ class Dna extends Object implements Cloneable {
 			}
 		}
 
-		// fehlende wieder einfügen
+		// fehlende wieder einf�gen
 		for (i = 0; i < JBpp.n; ++i) {
 			if (!f[i]) {
 				c = null;
@@ -230,13 +267,14 @@ class Dna extends Object implements Cloneable {
 				for (j = 0; j < dna.size(); ++j) {
 					c = dna.get(j);
 
-					if (c.weight() + JBpp.data[i] <= JBpp.wmax) {
+					if (c.weight() + JBpp.instance.data[i] <= JBpp.wmax) {
 						break;
 					}
 				}
 
-				if ((c == null) || (c.weight() + JBpp.data[i] > JBpp.wmax)) {
-					c = new Chromosom();
+				if ((c == null)
+						|| (c.weight() + JBpp.instance.data[i] > JBpp.wmax)) {
+					c = new Chromosome();
 					dna.add(c);
 				}
 
@@ -246,8 +284,8 @@ class Dna extends Object implements Cloneable {
 	}
 
 	public int[] toArray() {
-		int a[] = new int[JBpp.n];
-		int b[];
+		int[] a = new int[JBpp.n];
+		int[] b;
 		int l = 0;
 
 		for (int j = 0; j < dna.size(); ++j) {
@@ -265,7 +303,7 @@ class Dna extends Object implements Cloneable {
 	@Override
 	public String toString() {
 		String out;
-		Chromosom c;
+		Chromosome c;
 
 		out = "Fitness: " + fitness() + ", Size: " + dna.size() + ", Dna: ";
 
