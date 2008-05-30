@@ -29,7 +29,7 @@ import java.util.List;
  *
  * @author Daniel
  */
-class Chromosome extends Object implements Cloneable {
+public class Chromosome extends Object implements Cloneable {
 
 	/**
 	 * The genes of the chromosome.

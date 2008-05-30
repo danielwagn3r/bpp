@@ -16,7 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  $Id: Dna.java 1171 2008-04-26 10:07:33Z Daniel $
+ *  $Id$
  */
 
 package org.kwaxi.jbpp;
@@ -105,8 +105,8 @@ public class Evolutionizer {
 		// In jeder Generation 'mr' Mutationen versuchen
 
 		for (int i = 0; i < JBpp.mr; ++i) {
-			// Mit Wahrscheinlichkeit 'mp' an einer zufï¿½lligen Dna eine
-			// Mutation durchfï¿½hren
+			// Mit Wahrscheinlichkeit 'mp' an einer zufälligen Dna eine
+			// Mutation durchführen
 
 			if (JBpp.rand.nextDouble() < JBpp.mp) {
 				pop[JBpp.rand.nextInt(JBpp.ps)].mutate();

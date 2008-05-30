@@ -16,12 +16,14 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- *  $Id: Dna.java 1171 2008-04-26 10:07:33Z Daniel $
+ *  $Id$
  */
 
 package org.kwaxi.jbpp.algorithm;
 
+import org.kwaxi.jbpp.Chromosome;
 import org.kwaxi.jbpp.Dna;
+import org.kwaxi.jbpp.JBpp;
 
 /**
  * @author Daniel
@@ -36,8 +38,33 @@ public class SimpleMutation implements Mutation {
 	 */
 	@Override
 	public Dna mutate(Dna a) {
-		// TODO Auto-generated method stub
-		return null;
+
+		/**
+		 * Zufällig zwei Chromosome auswählen, von jedem Gen zufällig ein
+		 * Chromosm auswählen falls die ausgewählten Gene im anderen Chromosome
+		 * noch Platz haben werden diese vertauscht
+		 */
+
+		Chromosome ca = a.get(JBpp.rand.nextInt(a.size()));
+		Chromosome cb = a.get(JBpp.rand.nextInt(a.size()));
+
+		if (ca != cb) {
+			// Nur bei verschiedenen Chromosomen mutieren
+
+			// Jetzt zwei zufï¿½llige Gene auswï¿½hlen
+			int ga = ca.get(JBpp.rand.nextInt(ca.size()));
+			int gb = cb.get(JBpp.rand.nextInt(cb.size()));
+
+			if ((JBpp.instance.data[ga] + cb.weight() - JBpp.instance.data[gb] <= JBpp.wmax)
+					&& (JBpp.instance.data[gb] + ca.weight()
+							- JBpp.instance.data[ga] <= JBpp.wmax)) {
+				ca.remove(ga);
+				ca.add(gb);
+
+				cb.remove(gb);
+				cb.add(ga);
+			}
+		}
 	}
 
 }
