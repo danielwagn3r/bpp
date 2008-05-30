@@ -19,13 +19,10 @@
  *  $Id$
  */
 
-package org.kwaxi.jbpp.algorithm;
+package org.kwaxi.jbpp;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.kwaxi.jbpp.Dna;
-import org.kwaxi.jbpp.Evolutionizer;
-import org.kwaxi.jbpp.JBpp;
 
 /**
  * Class for a tournament selection algorithm.

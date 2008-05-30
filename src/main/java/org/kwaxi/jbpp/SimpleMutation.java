@@ -19,11 +19,8 @@
  *  $Id$
  */
 
-package org.kwaxi.jbpp.algorithm;
+package org.kwaxi.jbpp;
 
-import org.kwaxi.jbpp.Chromosome;
-import org.kwaxi.jbpp.Dna;
-import org.kwaxi.jbpp.JBpp;
 
 /**
  * @author Daniel
@@ -44,9 +41,8 @@ public class SimpleMutation implements Mutation {
 		 * Chromosm auswählen falls die ausgewählten Gene im anderen Chromosome
 		 * noch Platz haben werden diese vertauscht
 		 */
-
-		Chromosome ca = a.get(JBpp.rand.nextInt(a.size()));
-		Chromosome cb = a.get(JBpp.rand.nextInt(a.size()));
+		Chromosome ca = a.dna.get(JBpp.rand.nextInt(a.dna.size()));
+		Chromosome cb = a.dna.get(JBpp.rand.nextInt(a.dna.size()));
 
 		if (ca != cb) {
 			// Nur bei verschiedenen Chromosomen mutieren
@@ -65,6 +61,7 @@ public class SimpleMutation implements Mutation {
 				cb.add(ga);
 			}
 		}
-	}
 
+		return a;
+	}
 }

@@ -19,23 +19,23 @@
  *  $Id$
  */
 
-package org.kwaxi.jbpp.algorithm;
+package org.kwaxi.jbpp;
 
-import org.kwaxi.jbpp.Dna;
+import org.kwaxi.jbpp.*;
 
 /**
- * @author Daniel
+ * Interface for selection algorithms.
  *
+ * @author Daniel
  */
-public class RandomRecombination implements Recombination {
+public interface Selection {
 
-	/* (non-Javadoc)
-	 * @see org.kwaxi.jbpp.algorithm.Recombination#recombine(org.kwaxi.jbpp.Dna, org.kwaxi.jbpp.Dna)
+	/**
+	 * Selection of new population out of an existing one.
+	 *
+	 * @param pop The input population.
+	 * @return The resulting population.
 	 */
-	@Override
-	public Dna recombine(Dna a, Dna b) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	Dna[] select(final Dna[] pop);
 
 }

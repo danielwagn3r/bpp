@@ -19,9 +19,8 @@
  *  $Id$
  */
 
-package org.kwaxi.jbpp.algorithm;
+package org.kwaxi.jbpp;
 
-import org.kwaxi.jbpp.Dna;
 
 /**
  * Interface for mutation algorithms.

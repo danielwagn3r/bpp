@@ -19,19 +19,22 @@
  *  $Id$
  */
 
-package org.kwaxi.jbpp.algorithm;
+package org.kwaxi.jbpp;
 
-import org.kwaxi.jbpp.Dna;
 
 /**
  * @author Daniel
  *
  */
-public class CrossoverRecombination implements Recombination {
+public class RandomRecombination implements Recombination {
 
+	/* (non-Javadoc)
+	 * @see org.kwaxi.jbpp.algorithm.Recombination#recombine(org.kwaxi.jbpp.Dna, org.kwaxi.jbpp.Dna)
+	 */
 	@Override
-	public Dna recombine(final Dna parentA, final Dna parentB) {
-		return parentA;
+	public Dna recombine(Dna a, Dna b) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -104,7 +104,7 @@ public class Dna extends Object implements Cloneable {
 		return (c);
 	}
 
-	private List<Chromosome> dna;
+	public List<Chromosome> dna;
 
 	public Dna(final boolean init) {
 		super();

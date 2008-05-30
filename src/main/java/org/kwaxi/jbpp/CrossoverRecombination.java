@@ -19,23 +19,18 @@
  *  $Id$
  */
 
-package org.kwaxi.jbpp.algorithm;
+package org.kwaxi.jbpp;
 
-import org.kwaxi.jbpp.*;
 
 /**
- * Interface for selection algorithms.
- *
  * @author Daniel
+ *
  */
-public interface Selection {
+public class CrossoverRecombination implements Recombination {
 
-	/**
-	 * Selection of new population out of an existing one.
-	 *
-	 * @param pop The input population.
-	 * @return The resulting population.
-	 */
-	Dna[] select(final Dna[] pop);
+	@Override
+	public Dna recombine(final Dna parentA, final Dna parentB) {
+		return parentA;
+	}
 
 }
