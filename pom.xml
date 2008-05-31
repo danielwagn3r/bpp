@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id -->
+<!-- $Id$ -->
 <project>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.kwaxi</groupId>
@@ -13,6 +13,14 @@
 			<id>Daniel</id>
 			<name>Daniel Wagner</name>
 			<email>dwkwaxi@gmail.com</email>
+			<organization>Cemetery</organization>
+			<organizationUrl>http://www.cemetery.lan</organizationUrl>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<id>Natascha</id>
+			<name>Nataliya Wagner</name>
+			<email>nataliya.wagner@gmail.com</email>
 			<organization>Cemetery</organization>
 			<organizationUrl>http://www.cemetery.lan</organizationUrl>
 			<timezone>+1</timezone>
@@ -242,7 +250,7 @@
 			<id>central</id>
 			<url>http://beigesding:8080/artifactory/repo</url>
 			<snapshots>
-				<enabled>false</enabled>
+				<enabled>true</enabled>
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
