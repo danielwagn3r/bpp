@@ -1,22 +1,22 @@
 /*
- *  JBpp - A Bin Packer in Java
+ * JBpp - A Bin Packer in Java
  *
- *  Copyright (C) 2007  Daniel Wagner <dwkwaxi@gmail.com>
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
+ * Copyright (C) 2008  Daniel Wagner <dwkwaxi@gmail.com>
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  $Id$
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * $Id$
  */
 
 package org.kwaxi.jbpp;
@@ -36,7 +36,6 @@ public class Chromosome extends Object implements Cloneable {
 	 */
 	private List<Integer> gens;
 
-
 	/**
 	 *
 	 */
@@ -46,7 +45,6 @@ public class Chromosome extends Object implements Cloneable {
 		gens = new ArrayList<Integer>();
 	}
 
-
 	/**
 	 * @param i
 	 */
@@ -54,8 +52,9 @@ public class Chromosome extends Object implements Cloneable {
 		gens.add(Integer.valueOf(i));
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 *
 	 * @see java.lang.Object#clone()
 	 */
 	@Override
@@ -72,7 +71,6 @@ public class Chromosome extends Object implements Cloneable {
 		 */
 	}
 
-
 	/**
 	 * @param i
 	 * @return
@@ -80,7 +78,6 @@ public class Chromosome extends Object implements Cloneable {
 	public int get(int i) {
 		return (gens.get(i)).intValue();
 	}
-
 
 	/**
 	 * @param i
@@ -97,14 +94,12 @@ public class Chromosome extends Object implements Cloneable {
 		}
 	}
 
-
 	/**
 	 * @return
 	 */
 	public int size() {
 		return (gens.size());
 	}
-
 
 	/**
 	 * @return
@@ -119,8 +114,9 @@ public class Chromosome extends Object implements Cloneable {
 		return a;
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -137,7 +133,6 @@ public class Chromosome extends Object implements Cloneable {
 
 		return (out);
 	}
-
 
 	/**
 	 * @return Weight of the Chromosome.
