@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id$ -->
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.kwaxi</groupId>
 	<artifactId>bpp</artifactId>
-	<name>bpp</name>
+	<packaging>jar</packaging>
 	<version>1.0-SNAPSHOT</version>
+	<name>bpp</name>
 	<url>http://maven.apache.org</url>
 
 	<licenses>
@@ -39,6 +42,21 @@
 		<url>http://beigesding:8080/hudson</url>
 	</ciManagement>
 
+	<distributionManagement>
+		<repository>
+			<id>cemetery</id>
+			<url>
+				dav:http://beigesding:8080/artifactory/libs-releases
+			</url>
+		</repository>
+		<snapshotRepository>
+			<id>cemetery</id>
+			<url>
+				dav:http://beigesding:8080/artifactory/libs-snapshots
+			</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 	<scm>
 		<connection>
 			scm:svn:http://beigesding/svn/private/studium/bpp/trunk/
@@ -55,7 +73,7 @@
 	</organization>
 
 	<build>
-		<finalName>jbpp</finalName>
+		<finalName>bpp</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -246,25 +264,5 @@
 			</plugin>
 		</plugins>
 	</reporting>
-
-	<repositories>
-		<repository>
-			<id>central</id>
-			<url>http://beigesding:8080/artifactory/repo</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>central</id>
-			<url>http://beigesding:8080/artifactory/repo</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
 
 </project>
