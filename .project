@@ -16,10 +16,10 @@
       <name>net.sourceforge.pmd.runtime.pmdBuilder</name>
     </buildCommand>
     <buildCommand>
-      <name>org.devzuz.q.maven.jdt.core.mavenIncrementalBuilder</name>
+      <name>com.stateofflow.eclipse.metrics.MetricsBuilder</name>
     </buildCommand>
     <buildCommand>
-      <name>com.stateofflow.eclipse.metrics.MetricsBuilder</name>
+      <name>org.maven.ide.eclipse.maven2Builder</name>
     </buildCommand>
   </buildSpec>
   <natures>
@@ -27,7 +27,7 @@
     <nature>com.atlassw.tools.eclipse.checkstyle.CheckstyleNature</nature>
     <nature>edu.umd.cs.findbugs.plugin.eclipse.findbugsNature</nature>
     <nature>net.sourceforge.pmd.runtime.pmdNature</nature>
-    <nature>org.devzuz.q.maven.jdt.core.mavenNature</nature>
     <nature>com.stateofflow.eclipse.metrics.MetricsNature</nature>
+    <nature>org.maven.ide.eclipse.maven2Nature</nature>
   </natures>
 </projectDescription>
