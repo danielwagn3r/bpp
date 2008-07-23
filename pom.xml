@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>bpp</name>
-	<url>http://maven.apache.org</url>
+	<url>http://www.cemetery.lan/bpp</url>
 
 	<licenses>
 		<license>
@@ -153,7 +153,7 @@
 							com.stateofflow.eclipse.metrics.MetricsNature
 						</projectnature>
 						<projectnature>
-							org.devzuz.q.maven.jdt.core.mavenNature
+							org.maven.ide.eclipse.maven2Nature
 						</projectnature>
 					</additionalProjectnatures>
 					<additionalBuildcommands>
@@ -170,7 +170,7 @@
 							com.stateofflow.eclipse.metrics.MetricsBuilder
 						</buildcommand>
 						<buildcommand>
-							org.devzuz.q.maven.jdt.core.mavenIncrementalBuilder
+							org.maven.ide.eclipse.maven2Builder
 						</buildcommand>
 					</additionalBuildcommands>
 					<workspace>${basedir}</workspace>
