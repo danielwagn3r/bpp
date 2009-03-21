@@ -165,15 +165,6 @@
                     <downloadJavadocs>true</downloadJavadocs>
                     <additionalProjectnatures>
                         <projectnature>
-                            com.atlassw.tools.eclipse.checkstyle.CheckstyleNature
-                        </projectnature>
-                        <projectnature>
-                            edu.umd.cs.findbugs.plugin.eclipse.findbugsNature
-                        </projectnature>
-                        <projectnature>
-                            net.sourceforge.pmd.runtime.pmdNature
-                        </projectnature>
-                        <projectnature>
                             com.stateofflow.eclipse.metrics.MetricsNature
                         </projectnature>
                         <projectnature>
@@ -181,15 +172,6 @@
                         </projectnature>
                     </additionalProjectnatures>
                     <additionalBuildcommands>
-                        <buildcommand>
-                            com.atlassw.tools.eclipse.checkstyle.CheckstyleBuilder
-                            </buildcommand>
-                        <buildcommand>
-                            edu.umd.cs.findbugs.plugin.eclipse.findbugsBuilder
-                        </buildcommand>
-                        <buildcommand>
-                            net.sourceforge.pmd.runtime.pmdBuilder
-                        </buildcommand>
                         <buildcommand>
                             com.stateofflow.eclipse.metrics.MetricsBuilder
                         </buildcommand>
