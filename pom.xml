@@ -41,13 +41,13 @@
         <repository>
             <id>cemetery</id>
             <url>
-                dav:http://cemetery.strangled.net:8086/archiva/repository/internal/
+                dav:http://cemetery.strangled.net:8086/artifactory/libs-releases-local
             </url>
         </repository>
         <snapshotRepository>
             <id>cemetery</id>
             <url>
-                dav:http://cemetery.strangled.net:8086/archiva/repository/snapshots/
+                dav:http://cemetery.strangled.net:8086/artifactory/libs-snapshots-local
             </url>
         </snapshotRepository>
     </distributionManagement>
