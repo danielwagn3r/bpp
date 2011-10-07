@@ -1,5 +1,5 @@
 /*
- * JBpp - A Bin Packer in Java
+ * Bpp - A Bin Packer in Java
  *
  * Copyright (C) 2008  Daniel Wagner <dwkwaxi@gmail.com>
  *
@@ -19,15 +19,15 @@
  * $Id$
  */
 
-package org.kwaxi.jbpp;
+package name.wagners.bpp;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * This class represents a bin.
- *
- * @author Daniel
+ * 
+ * @author Daniel Wagner <daniel@wagners.name>
  */
 public class Chromosome extends Object implements Cloneable {
 
@@ -37,8 +37,8 @@ public class Chromosome extends Object implements Cloneable {
 	private List<Integer> gens;
 
 	/**
-	 *
-	 */
+     *
+     */
 	public Chromosome() {
 		super();
 
@@ -48,13 +48,13 @@ public class Chromosome extends Object implements Cloneable {
 	/**
 	 * @param i
 	 */
-	public void add(int i) {
+	public void add(final int i) {
 		gens.add(Integer.valueOf(i));
 	}
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see java.lang.Object#clone()
 	 */
 	@Override
@@ -64,9 +64,9 @@ public class Chromosome extends Object implements Cloneable {
 
 		/**
 		 * old version Chromosome c = new Chromosome();
-		 *
+		 * 
 		 * for (int j = 0; j < gens.size(); ++j) { c.add(get(j)); }
-		 *
+		 * 
 		 * return (c);
 		 */
 	}
@@ -75,14 +75,14 @@ public class Chromosome extends Object implements Cloneable {
 	 * @param i
 	 * @return
 	 */
-	public int get(int i) {
+	public int get(final int i) {
 		return (gens.get(i)).intValue();
 	}
 
 	/**
 	 * @param i
 	 */
-	public void remove(int i) {
+	public void remove(final int i) {
 		Integer g;
 
 		for (int j = 0; j < gens.size(); ++j) {
@@ -116,7 +116,7 @@ public class Chromosome extends Object implements Cloneable {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -141,7 +141,7 @@ public class Chromosome extends Object implements Cloneable {
 		double g = 0.0;
 
 		for (int j = 0; j < gens.size(); ++j) {
-			g += JBpp.instance.data[(gens.get(j)).intValue()];
+			g += Bpp.instance.data[(gens.get(j)).intValue()];
 		}
 
 		return (g);

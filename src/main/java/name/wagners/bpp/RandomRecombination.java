@@ -1,34 +1,42 @@
 /*
- * JBpp - A Bin Packer in Java
- * 
+ * Bpp - A Bin Packer in Java
+ *
  * Copyright (C) 2008  Daniel Wagner <dwkwaxi@gmail.com>
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * $Id$
  */
 
-package org.kwaxi.jbpp;
+package name.wagners.bpp;
 
 /**
- * @author Daniel
+ * @author Daniel Wagner <daniel@wagners.name>
  */
-public class InstanceException extends Exception {
+public class RandomRecombination implements Recombination {
 
-	/**
-	 * Generated serial Version UID.
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * name.wagners.bpp.algorithm.Recombination#recombine(name.wagners.bpp.Dna,
+	 * name.wagners.bpp.Dna)
 	 */
-	private static final long serialVersionUID = -4309948415796545729L;
+	@Override
+	public Dna recombine(Dna a, Dna b) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

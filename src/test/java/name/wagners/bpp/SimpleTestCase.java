@@ -1,5 +1,5 @@
 /*
- * JBpp - A Bin Packer in Java
+ * Bpp - A Bin Packer in Java
  *
  * Copyright (C) 2008  Daniel Wagner <dwkwaxi@gmail.com>
  *
@@ -19,22 +19,31 @@
  * $Id$
  */
 
-package org.kwaxi.jbpp;
+package name.wagners.bpp;
 
+import junit.framework.TestCase;
 
 /**
- * @author Daniel
- *
+ * @author Daniel Wagner <daniel@wagners.name>
  */
-public class RandomRecombination implements Recombination {
+public class SimpleTestCase extends TestCase {
 
-	/* (non-Javadoc)
-	 * @see org.kwaxi.jbpp.algorithm.Recombination#recombine(org.kwaxi.jbpp.Dna, org.kwaxi.jbpp.Dna)
-	 */
-	@Override
-	public Dna recombine(Dna a, Dna b) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public void testChromosomAddAndGetSize() {
+        Chromosome chrom = new Chromosome();
 
+        chrom.add(1);
+        assertEquals(1, chrom.size());
+    }
+
+    public void testChromosomAddAndRemoveAndGetSize() {
+        Chromosome chrom = new Chromosome();
+
+        chrom.add(1);
+
+        assertEquals(1, chrom.size());
+
+        chrom.remove(1);
+
+        assertEquals(0, chrom.size());
+    }
 }

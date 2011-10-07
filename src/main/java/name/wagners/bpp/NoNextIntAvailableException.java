@@ -1,5 +1,5 @@
 /*
- * JBpp - A Bin Packer in Java
+ * Bpp - A Bin Packer in Java
  *
  * Copyright (C) 2008  Daniel Wagner <dwkwaxi@gmail.com>
  *
@@ -19,17 +19,16 @@
  * $Id$
  */
 
-package org.kwaxi.jbpp;
+package name.wagners.bpp;
 
 /**
- * @author Daniel
- *
+ * @author Daniel Wagner <daniel@wagners.name>
  */
-public class PoolNotAvailableException extends Exception {
+public class NoNextIntAvailableException extends Exception {
 
 	/**
 	 * Generated serial version UID.
 	 */
-	private static final long serialVersionUID = 7222351012945459766L;
+	private static final long serialVersionUID = -1813730916360659574L;
 
 }

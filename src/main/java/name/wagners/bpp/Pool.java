@@ -1,5 +1,5 @@
 /*
- * JBpp - A Bin Packer in Java
+ * Bpp - A Bin Packer in Java
  *
  * Copyright (C) 2008  Daniel Wagner <dwkwaxi@gmail.com>
  *
@@ -19,13 +19,13 @@
  * $Id$
  */
 
-package org.kwaxi.jbpp;
+package name.wagners.bpp;
 
 /**
  * This class provides a pool of integers, which can be take in a random
  * sequence.
- *
- * @author Daniel
+ * 
+ * @author Daniel Wagner <daniel@wagners.name>
  */
 class Pool {
 
@@ -46,7 +46,7 @@ class Pool {
 
 	/**
 	 * Simplest constructor.
-	 *
+	 * 
 	 * @param sizeOfPool
 	 *            Size of the sequence in the pool.
 	 */
@@ -57,7 +57,7 @@ class Pool {
 
 	/**
 	 * Simple constructor.
-	 *
+	 * 
 	 * @param offset
 	 *            An offset that shifts the start of sequence from zero.
 	 * @param sizeOfPool
@@ -71,7 +71,7 @@ class Pool {
 
 	/**
 	 * Reset the pool.
-	 *
+	 * 
 	 * A new sequence of integers from the same pool is available.
 	 */
 	public void reset() {
@@ -84,7 +84,7 @@ class Pool {
 
 	/**
 	 * Adjusts the size of the pool.
-	 *
+	 * 
 	 * @param sizeOfPool
 	 *            Size of the sequence of integers in the pool.
 	 */
@@ -100,7 +100,7 @@ class Pool {
 
 	/**
 	 * Choose the next integer from the pool for the sequence.
-	 *
+	 * 
 	 * @return Random integer not already chosen from the pool.
 	 */
 	public int nextInt() throws NoNextIntAvailableException,
@@ -114,10 +114,10 @@ class Pool {
 			throw new NoNextIntAvailableException();
 		}
 
-		int i = JBpp.rand.nextInt(pool.length);
+		int i = Bpp.rand.nextInt(pool.length);
 
 		while (pool[i]) {
-			i = JBpp.rand.nextInt(pool.length);
+			i = Bpp.rand.nextInt(pool.length);
 		}
 
 		pool[i] = true;

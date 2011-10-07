@@ -1,5 +1,5 @@
 /*
- * JBpp - A Bin Packer in Java
+ * Bpp - A Bin Packer in Java
  *
  * Copyright (C) 2008  Daniel Wagner <dwkwaxi@gmail.com>
  *
@@ -19,7 +19,7 @@
  * $Id$
  */
 
-package org.kwaxi.jbpp;
+package name.wagners.bpp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +27,9 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+/**
+ * @author Daniel Wagner <daniel@wagners.name>
+ */
 public class Dna extends Object implements Cloneable {
 
 	private static final double PROPABILITY = 0.5;
@@ -38,11 +41,11 @@ public class Dna extends Object implements Cloneable {
 
 	public static Dna recombineVariantA(Dna a, Dna b) {
 		Dna c;
-		int[] n = new int[JBpp.n];
+		int[] n = new int[Bpp.n];
 		int[] as = a.toArray(), bs = b.toArray();
 
-		int x = JBpp.rand.nextInt(JBpp.n);
-		int y = JBpp.rand.nextInt(JBpp.n);
+		int x = Bpp.rand.nextInt(Bpp.n);
+		int y = Bpp.rand.nextInt(Bpp.n);
 		int i;
 
 		if (x > y) {
@@ -62,7 +65,7 @@ public class Dna extends Object implements Cloneable {
 		}
 
 		// Restliche Chromosome aus a nach c �bernehmen
-		for (; i < JBpp.n; ++i) {
+		for (; i < Bpp.n; ++i) {
 			n[i] = as[i];
 		}
 
@@ -87,7 +90,7 @@ public class Dna extends Object implements Cloneable {
 		i = 0;
 		while ((i < as) && (i < bs)) {
 			try {
-				if (JBpp.rand.nextDouble() < PROPABILITY) {
+				if (Bpp.rand.nextDouble() < PROPABILITY) {
 					c.dna.add((Chromosome) a.dna.get(i).clone());
 				} else {
 					c.dna.add((Chromosome) b.dna.get(i).clone());
@@ -122,8 +125,8 @@ public class Dna extends Object implements Cloneable {
 		Chromosome c = new Chromosome();
 		dna = new ArrayList<Chromosome>();
 
-		for (int j = 0; j < JBpp.n; j++) {
-			if (c.weight() + JBpp.instance.data[a[j]] > JBpp.wmax) {
+		for (int j = 0; j < Bpp.n; j++) {
+			if (c.weight() + Bpp.instance.data[a[j]] > Bpp.wmax) {
 				dna.add(c);
 				c = new Chromosome();
 			}
@@ -141,26 +144,26 @@ public class Dna extends Object implements Cloneable {
 
 		/**
 		 * old version Chromosome c = new Chromosome();
-		 *
+		 * 
 		 * Dna d = new Dna(false);
-		 *
+		 * 
 		 * for (int j = 0; j < dna.size(); ++j) { d.dna = (Vector<Chromosome>)
 		 * dna.clone(); }
-		 *
+		 * 
 		 * return (d);
 		 */
 	}
 
 	/**
 	 * Computes the fitness.
-	 *
+	 * 
 	 * @return Objective value.
 	 */
 	public double fitness() {
 		double g = 0.0;
 
 		for (int j = 0; j < dna.size(); j++) {
-			g += Math.pow(dna.get(j).weight() / JBpp.wmax, 2);
+			g += Math.pow(dna.get(j).weight() / Bpp.wmax, 2);
 		}
 
 		g = g / dna.size();
@@ -169,16 +172,16 @@ public class Dna extends Object implements Cloneable {
 	}
 
 	private void initDna() {
-		Pool pool = new Pool(JBpp.n);
+		Pool pool = new Pool(Bpp.n);
 		Chromosome c = new Chromosome();
 
 		dna.clear();
 
-		for (int j = 0; j < JBpp.n; j++) {
+		for (int j = 0; j < Bpp.n; j++) {
 			try {
 				int i = pool.nextInt();
 
-				if (c.weight() + JBpp.instance.data[i] > JBpp.wmax) {
+				if (c.weight() + Bpp.instance.data[i] > Bpp.wmax) {
 					dna.add(c);
 					c = new Chromosome();
 				}
@@ -199,19 +202,19 @@ public class Dna extends Object implements Cloneable {
 		 * noch Platz haben werden diese vertauscht
 		 */
 
-		Chromosome ca = dna.get(JBpp.rand.nextInt(dna.size()));
-		Chromosome cb = dna.get(JBpp.rand.nextInt(dna.size()));
+		Chromosome ca = dna.get(Bpp.rand.nextInt(dna.size()));
+		Chromosome cb = dna.get(Bpp.rand.nextInt(dna.size()));
 
 		if (ca != cb) {
 			// Nur bei verschiedenen Chromosomen mutieren
 
 			// Jetzt zwei zuf�llige Gene ausw�hlen
-			int ga = ca.get(JBpp.rand.nextInt(ca.size()));
-			int gb = cb.get(JBpp.rand.nextInt(cb.size()));
+			int ga = ca.get(Bpp.rand.nextInt(ca.size()));
+			int gb = cb.get(Bpp.rand.nextInt(cb.size()));
 
-			if ((JBpp.instance.data[ga] + cb.weight() - JBpp.instance.data[gb] <= JBpp.wmax)
-					&& (JBpp.instance.data[gb] + ca.weight()
-							- JBpp.instance.data[ga] <= JBpp.wmax)) {
+			if ((Bpp.instance.data[ga] + cb.weight() - Bpp.instance.data[gb] <= Bpp.wmax)
+					&& (Bpp.instance.data[gb] + ca.weight()
+							- Bpp.instance.data[ga] <= Bpp.wmax)) {
 				ca.remove(ga);
 				ca.add(gb);
 
@@ -226,7 +229,7 @@ public class Dna extends Object implements Cloneable {
 	 */
 	public void repair() {
 		Chromosome c;
-		boolean[] f = new boolean[JBpp.n];
+		boolean[] f = new boolean[Bpp.n];
 		int i, j, l;
 
 		// doppelte entfernen
@@ -259,21 +262,21 @@ public class Dna extends Object implements Cloneable {
 			}
 		}
 
-		// fehlende wieder einf�gen
-		for (i = 0; i < JBpp.n; ++i) {
+		// fehlende wieder einfügen
+		for (i = 0; i < Bpp.n; ++i) {
 			if (!f[i]) {
 				c = null;
 
 				for (j = 0; j < dna.size(); ++j) {
 					c = dna.get(j);
 
-					if (c.weight() + JBpp.instance.data[i] <= JBpp.wmax) {
+					if (c.weight() + Bpp.instance.data[i] <= Bpp.wmax) {
 						break;
 					}
 				}
 
 				if ((c == null)
-						|| (c.weight() + JBpp.instance.data[i] > JBpp.wmax)) {
+						|| (c.weight() + Bpp.instance.data[i] > Bpp.wmax)) {
 					c = new Chromosome();
 					dna.add(c);
 				}
@@ -284,7 +287,7 @@ public class Dna extends Object implements Cloneable {
 	}
 
 	public int[] toArray() {
-		int[] a = new int[JBpp.n];
+		int[] a = new int[Bpp.n];
 		int[] b;
 		int l = 0;
 

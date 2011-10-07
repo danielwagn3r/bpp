@@ -1,5 +1,5 @@
 /*
- * JBpp - A Bin Packer in Java
+ * Bpp - A Bin Packer in Java
  *
  * Copyright (C) 2008  Daniel Wagner <dwkwaxi@gmail.com>
  *
@@ -19,23 +19,16 @@
  * $Id$
  */
 
-package org.kwaxi.jbpp;
-
+package name.wagners.bpp;
 
 /**
- * Interface for mutation algorithms.
- *
- * @author Daniel
+ * @author Daniel Wagner <daniel@wagners.name>
  */
-public interface Mutation {
+public class CrossoverRecombination implements Recombination {
 
-	/**
-	 * Mutates the given Dna object.
-	 *
-	 * @param dna
-	 *            The object to mutate.
-	 * @return The mutated object.
-	 */
-	Dna mutate(final Dna dna);
+	@Override
+	public Dna recombine(final Dna parentA, final Dna parentB) {
+		return parentA;
+	}
 
 }

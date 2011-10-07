@@ -1,5 +1,5 @@
 /*
- * JBpp - A Bin Packer in Java
+ * Bpp - A Bin Packer in Java
  *
  * Copyright (C) 2008  Daniel Wagner <dwkwaxi@gmail.com>
  *
@@ -19,19 +19,17 @@
  * $Id$
  */
 
-package org.kwaxi.jbpp;
-
+package name.wagners.bpp;
 
 /**
- * @author Daniel
- *
+ * @author Daniel Wagner <daniel@wagners.name>
  */
 public class SimpleMutation implements Mutation {
 
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @see org.kwaxi.jbpp.algorithm.Mutation#mutate(org.kwaxi.jbpp.Dna)
+	 * 
+	 * @see name.wagners.bpp.algorithm.Mutation#mutate(name.wagners.bpp.Dna)
 	 */
 	@Override
 	public Dna mutate(Dna a) {
@@ -41,19 +39,19 @@ public class SimpleMutation implements Mutation {
 		 * Chromosm ausw�hlen falls die ausgew�hlten Gene im anderen Chromosome
 		 * noch Platz haben werden diese vertauscht
 		 */
-		Chromosome ca = a.dna.get(JBpp.rand.nextInt(a.dna.size()));
-		Chromosome cb = a.dna.get(JBpp.rand.nextInt(a.dna.size()));
+		Chromosome ca = a.dna.get(Bpp.rand.nextInt(a.dna.size()));
+		Chromosome cb = a.dna.get(Bpp.rand.nextInt(a.dna.size()));
 
 		if (ca != cb) {
 			// Nur bei verschiedenen Chromosomen mutieren
 
 			// Jetzt zwei zuf�llige Gene ausw�hlen
-			int ga = ca.get(JBpp.rand.nextInt(ca.size()));
-			int gb = cb.get(JBpp.rand.nextInt(cb.size()));
+			int ga = ca.get(Bpp.rand.nextInt(ca.size()));
+			int gb = cb.get(Bpp.rand.nextInt(cb.size()));
 
-			if ((JBpp.instance.data[ga] + cb.weight() - JBpp.instance.data[gb] <= JBpp.wmax)
-					&& (JBpp.instance.data[gb] + ca.weight()
-							- JBpp.instance.data[ga] <= JBpp.wmax)) {
+			if ((Bpp.instance.data[ga] + cb.weight() - Bpp.instance.data[gb] <= Bpp.wmax)
+					&& (Bpp.instance.data[gb] + ca.weight()
+							- Bpp.instance.data[ga] <= Bpp.wmax)) {
 				ca.remove(ga);
 				ca.add(gb);
 

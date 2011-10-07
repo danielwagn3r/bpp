@@ -1,5 +1,5 @@
 /*
- * JBpp - A Bin Packer in Java
+ * Bpp - A Bin Packer in Java
  *
  * Copyright (C) 2008  Daniel Wagner <dwkwaxi@gmail.com>
  *
@@ -19,23 +19,22 @@
  * $Id$
  */
 
-package org.kwaxi.jbpp;
-
-import org.kwaxi.jbpp.*;
+package name.wagners.bpp;
 
 /**
- * Interface for selection algorithms.
- *
- * @author Daniel
+ * Interface for mutation algorithms.
+ * 
+ * @author Daniel Wagner <daniel@wagners.name>
  */
-public interface Selection {
+public interface Mutation {
 
 	/**
-	 * Selection of new population out of an existing one.
-	 *
-	 * @param pop The input population.
-	 * @return The resulting population.
+	 * Mutates the given Dna object.
+	 * 
+	 * @param dna
+	 *            The object to mutate.
+	 * @return The mutated object.
 	 */
-	Dna[] select(final Dna[] pop);
+	Dna mutate(final Dna dna);
 
 }

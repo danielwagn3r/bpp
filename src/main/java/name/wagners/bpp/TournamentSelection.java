@@ -1,5 +1,5 @@
 /*
- * JBpp - A Bin Packer in Java
+ * Bpp - A Bin Packer in Java
  *
  * Copyright (C) 2008  Daniel Wagner <dwkwaxi@gmail.com>
  *
@@ -19,15 +19,15 @@
  * $Id$
  */
 
-package org.kwaxi.jbpp;
+package name.wagners.bpp;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
  * Class for a tournament selection algorithm.
- *
- * @author Daniel
+ * 
+ * @author Daniel Wagner <daniel@wagners.name>
  */
 public class TournamentSelection implements Selection {
 
@@ -36,23 +36,25 @@ public class TournamentSelection implements Selection {
 	 */
 	private static Log log = LogFactory.getLog(TournamentSelection.class);
 
-	/* (non-Javadoc)
-	 * @see org.kwaxi.jbpp.algorithm.Selection#select(org.kwaxi.jbpp.Dna[])
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see name.wagners.bpp.algorithm.Selection#select(name.wagners.bpp.Dna[])
 	 */
 	@Override
 	public Dna[] select(final Dna[] pop) {
-		Dna[] npop = new Dna[JBpp.ps];
+		Dna[] npop = new Dna[Bpp.ps];
 
 		double fit = 0.0;
 		double max = Double.MIN_VALUE;
 		int best = 0, c;
 
 		// einfache tournament selection
-		for (int i = 0; i < JBpp.ps; ++i) {
+		for (int i = 0; i < Bpp.ps; ++i) {
 			max = Double.MIN_VALUE;
 
-			for (int j = 0; j < JBpp.sp; ++j) {
-				c = JBpp.rand.nextInt(JBpp.ps);
+			for (int j = 0; j < Bpp.sp; ++j) {
+				c = Bpp.rand.nextInt(Bpp.ps);
 
 				fit = pop[c].fitness();
 
@@ -65,7 +67,7 @@ public class TournamentSelection implements Selection {
 			try {
 				npop[i] = (Dna) pop[best].clone();
 			} catch (CloneNotSupportedException e) {
-				log.fatal( "Could not clone an object.", e);
+				log.fatal("Could not clone an object.", e);
 			}
 		}
 

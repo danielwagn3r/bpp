@@ -1,5 +1,5 @@
 /*
- * JBpp - A Bin Packer in Java
+ * Bpp - A Bin Packer in Java
  *
  * Copyright (C) 2008  Daniel Wagner <dwkwaxi@gmail.com>
  *
@@ -19,7 +19,7 @@
  * $Id$
  */
 
-package org.kwaxi.jbpp;
+package name.wagners.bpp;
 
 import java.util.Random;
 
@@ -34,12 +34,17 @@ import org.apache.commons.cli.PosixParser;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class JBpp {
+/**
+ * The Main class.
+ * 
+ * @author Daniel Wagner <daniel@wagners.name>
+ */
+public class Bpp {
 
 	/**
 	 * My Log class.
 	 */
-	private static Log log = LogFactory.getLog(JBpp.class);
+	private static final Log LOG = LogFactory.getLog(Bpp.class);
 
 	private static final int DEFAULT_GEN = 50;
 	private static final int DEFAULT_SP = 4;
@@ -77,24 +82,27 @@ public class JBpp {
 		Options options = new Options();
 
 		options.addOption(OptionBuilder.hasArg().withArgName("int")
-				.withLongOpt("generations").withDescription(
-						"Number of generations [default: 50]").create());
+				.withLongOpt("generations")
+				.withDescription("Number of generations [default: 50]")
+				.create());
 
 		options.addOption(OptionBuilder.hasArg().withArgName("int")
-				.withLongOpt("mutrate").withDescription(
-						"Mutation rate [default: 1]").create());
+				.withLongOpt("mutrate")
+				.withDescription("Mutation rate [default: 1]").create());
 
 		options.addOption(OptionBuilder.hasArg().withArgName("double")
-				.withLongOpt("mutprop").withDescription(
-						"Mutation propability [default: 0.5]").create());
+				.withLongOpt("mutprop")
+				.withDescription("Mutation propability [default: 0.5]")
+				.create());
 
 		options.addOption(OptionBuilder.hasArg().withArgName("int")
-				.withLongOpt("populationsize").withDescription(
-						"Size of population [default: 20]").create());
+				.withLongOpt("populationsize")
+				.withDescription("Size of population [default: 20]").create());
 
 		options.addOption(OptionBuilder.hasArg().withArgName("a|b")
-				.withLongOpt("recombalg").withDescription(
-						"Recombination algorithm [default: a]").create());
+				.withLongOpt("recombalg")
+				.withDescription("Recombination algorithm [default: a]")
+				.create());
 
 		// options.addOption(OptionBuilder
 		// .hasArg()
@@ -104,38 +112,43 @@ public class JBpp {
 		// .create());
 
 		options.addOption(OptionBuilder.hasArg().withArgName("double")
-				.withLongOpt("recombprop").withDescription(
-						"Recombination propability [default: 0.8]").create());
+				.withLongOpt("recombprop")
+				.withDescription("Recombination propability [default: 0.8]")
+				.create());
 
 		options.addOption(OptionBuilder.hasArg().withArgName("a")
-				.withLongOpt("selalg").withDescription(
-						"Selection algorithm [default: a]").create());
+				.withLongOpt("selalg")
+				.withDescription("Selection algorithm [default: a]").create());
 
 		options.addOption(OptionBuilder.hasArg().withArgName("int")
-				.withLongOpt("selectionpressure").withDescription(
-						"Selection pressure [default: 4]").create());
+				.withLongOpt("selectionpressure")
+				.withDescription("Selection pressure [default: 4]").create());
 
 		options.addOption(OptionBuilder.hasArg().withArgName("bool")
-				.withLongOpt("elitism").withDescription(
-						"Enable Elitism [default: 1]").create());
+				.withLongOpt("elitism")
+				.withDescription("Enable Elitism [default: 1]").create());
 
-		options.addOption(OptionBuilder.hasArg().withArgName("file")
+		options.addOption(OptionBuilder
+				.hasArg()
+				.withArgName("file")
 				// .isRequired()
-				.withLongOpt("datafile").withDescription(
-						"Problem data file [default: \"binpack.txt\"]")
+				.withLongOpt("datafile")
+				.withDescription("Problem data file [default: \"binpack.txt\"]")
 				.create());
 
 		options.addOptionGroup(new OptionGroup().addOption(
-				OptionBuilder.withLongOpt("verbose").withDescription(
-						"be extra verbose").create()).addOption(
-				OptionBuilder.withLongOpt("quiet").withDescription(
-						"be extra quiet").create()));
+				OptionBuilder.withLongOpt("verbose")
+						.withDescription("be extra verbose").create())
+				.addOption(
+						OptionBuilder.withLongOpt("quiet")
+								.withDescription("be extra quiet").create()));
 
-		options.addOption(OptionBuilder.withLongOpt("version").withDescription(
-				"print the version information and exit").create());
+		options.addOption(OptionBuilder.withLongOpt("version")
+				.withDescription("print the version information and exit")
+				.create());
 
-		options.addOption(OptionBuilder.withLongOpt("help").withDescription(
-				"print this message").create());
+		options.addOption(OptionBuilder.withLongOpt("help")
+				.withDescription("print this message").create());
 
 		try {
 			// parse the command line arguments
@@ -145,13 +158,13 @@ public class JBpp {
 			if (line.hasOption("help")) {
 				// automatically generate the help statement
 				HelpFormatter formatter = new HelpFormatter();
-				formatter.printHelp("JBpp", options);
+				formatter.printHelp("Bpp", options);
 
 				System.exit(0);
 			}
 
 			if (line.hasOption("version")) {
-				log.info("JBpp 0.1 (c) 2007 by Daniel Wagner");
+				LOG.info("Bpp 0.1 (c) 2007 by Daniel Wagner");
 			}
 
 			if (line.hasOption("datafile")) {
@@ -195,27 +208,27 @@ public class JBpp {
 			}
 
 		} catch (ParseException exp) {
-			log.info("Unexpected exception:" + exp.getMessage(), exp);
+			LOG.info("Unexpected exception:" + exp.getMessage(), exp);
 
 			// automatically generate the help statement
 			HelpFormatter formatter = new HelpFormatter();
-			formatter.printHelp("JBpp", options);
+			formatter.printHelp("Bpp", options);
 
 			System.exit(1);
 		}
 
 		// Ausgabe der eingestellten Optionen
 
-		log.info("Configuration");
-		log.info("  Datafile:                  " + fname);
-		log.info("  Generations:               " + gen);
-		log.info("  Population size:           " + ps);
-		log.info("  Elitism:                   " + elitism);
-		log.info("  Mutation propapility:      " + mp);
-		log.info("  Mutation rate:             " + mr);
-		log.info("  Recombination algorithm    " + (char) sel);
-		log.info("  Recombination propapility: " + rp);
-		log.info("  Selection pressure:        " + sp);
+		LOG.info("Configuration");
+		LOG.info("  Datafile:                  " + fname);
+		LOG.info("  Generations:               " + gen);
+		LOG.info("  Population size:           " + ps);
+		LOG.info("  Elitism:                   " + elitism);
+		LOG.info("  Mutation propapility:      " + mp);
+		LOG.info("  Mutation rate:             " + mr);
+		LOG.info("  Recombination algorithm    " + (char) sel);
+		LOG.info("  Recombination propapility: " + rp);
+		LOG.info("  Selection pressure:        " + sp);
 
 		// Daten laden
 		instance = new Instance();

@@ -1,5 +1,5 @@
 /*
- * JBpp - A Bin Packer in Java
+ * Bpp - A Bin Packer in Java
  *
  * Copyright (C) 2008  Daniel Wagner <dwkwaxi@gmail.com>
  *
@@ -19,32 +19,16 @@
  * $Id$
  */
 
-package org.kwaxi.jbpp;
-
-import junit.framework.*;
+package name.wagners.bpp;
 
 /**
- * @author Daniel
- *
+ * @author Daniel Wagner <daniel@wagners.name>
  */
-public class SimpleTestCase extends TestCase {
+public class InstanceException extends Exception {
 
-	public void testChromosomAddAndGetSize() {
-		Chromosome chrom = new Chromosome();
+	/**
+	 * Generated serial Version UID.
+	 */
+	private static final long serialVersionUID = -4309948415796545729L;
 
-		chrom.add(1);
-		assertEquals(1, chrom.size());
-	}
-
-	public void testChromosomAddAndRemoveAndGetSize() {
-		Chromosome chrom = new Chromosome();
-
-		chrom.add(1);
-
-		assertEquals(1, chrom.size());
-
-		chrom.remove(1);
-
-		assertEquals(0, chrom.size());
-	}
 }

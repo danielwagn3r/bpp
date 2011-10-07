@@ -1,5 +1,5 @@
 /*
- * JBpp - A Bin Packer in Java
+ * Bpp - A Bin Packer in Java
  *
  * Copyright (C) 2008  Daniel Wagner <dwkwaxi@gmail.com>
  *
@@ -19,7 +19,7 @@
  * $Id$
  */
 
-package org.kwaxi.jbpp;
+package name.wagners.bpp;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -32,10 +32,10 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * An instance of the Binpack-Problem.
- *
+ * 
  * This class holds all instance data.
- *
- * @author Daniel
+ * 
+ * @author Daniel Wagner <daniel@wagners.name>
  */
 public class Instance {
 
@@ -66,7 +66,7 @@ public class Instance {
 				StringTokenizer tokenizer = new StringTokenizer(line);
 
 				if (tokenizer.hasMoreTokens()) {
-					JBpp.wmax = (new Double(tokenizer.nextToken()))
+					Bpp.wmax = (new Double(tokenizer.nextToken()))
 							.doubleValue();
 				} else {
 					log.fatal("File '" + fileName + "' currupted!");
@@ -74,20 +74,19 @@ public class Instance {
 				}
 
 				if (tokenizer.hasMoreTokens()) {
-					JBpp.n = (Integer.valueOf(tokenizer.nextToken()))
-							.intValue();
+					Bpp.n = (Integer.valueOf(tokenizer.nextToken())).intValue();
 				} else {
 					log.fatal("File '" + fileName + "' currupted!");
 					System.exit(2);
 				}
 
 				log.info("File-Information");
-				log.info("  Wmax:                      " + JBpp.wmax);
-				log.info("  n:                         " + JBpp.n);
+				log.info("  Wmax:                      " + Bpp.wmax);
+				log.info("  n:                         " + Bpp.n);
 
-				data = new double[JBpp.n];
+				data = new double[Bpp.n];
 
-				for (int i = 0; i < JBpp.n; i++) {
+				for (int i = 0; i < Bpp.n; i++) {
 					line = fileReader.readLine();
 
 					tokenizer = new StringTokenizer(line);

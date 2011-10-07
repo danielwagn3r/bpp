@@ -1,5 +1,5 @@
 /*
- * JBpp - A Bin Packer in Java
+ * Bpp - A Bin Packer in Java
  *
  * Copyright (C) 2008  Daniel Wagner <dwkwaxi@gmail.com>
  *
@@ -19,17 +19,17 @@
  * $Id$
  */
 
-package org.kwaxi.jbpp;
+package name.wagners.bpp;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
  * An evolutionary algorithm.
- *
+ * 
  * Performs recombinations, mutations and selections.
- *
- * @author Daniel
+ * 
+ * @author Daniel Wagner <daniel@wagners.name>
  */
 public class Evolutionizer {
 
@@ -50,7 +50,7 @@ public class Evolutionizer {
 
 	/**
 	 * Simple constructor.
-	 *
+	 * 
 	 * @param i
 	 *            Instance of the bin packing problem.
 	 */
@@ -68,7 +68,7 @@ public class Evolutionizer {
 		population(true);
 
 		// Process generations
-		for (int i = 0; i < JBpp.gen; i++) {
+		for (int i = 0; i < Bpp.gen; i++) {
 			log.info("Generation " + i);
 
 			// Selection
@@ -91,9 +91,9 @@ public class Evolutionizer {
 	private void initInstance() {
 		log.debug("Initialisation");
 
-		pop = new Dna[JBpp.ps];
+		pop = new Dna[Bpp.ps];
 
-		for (int i = 0; i < JBpp.ps; ++i) {
+		for (int i = 0; i < Bpp.ps; ++i) {
 			pop[i] = new Dna(true);
 		}
 	}
@@ -104,12 +104,12 @@ public class Evolutionizer {
 	void mutation() {
 		// In jeder Generation 'mr' Mutationen versuchen
 
-		for (int i = 0; i < JBpp.mr; ++i) {
+		for (int i = 0; i < Bpp.mr; ++i) {
 			// Mit Wahrscheinlichkeit 'mp' an einer zuf�lligen Dna eine
 			// Mutation durchf�hren
 
-			if (JBpp.rand.nextDouble() < JBpp.mp) {
-				pop[JBpp.rand.nextInt(JBpp.ps)].mutate();
+			if (Bpp.rand.nextDouble() < Bpp.mp) {
+				pop[Bpp.rand.nextInt(Bpp.ps)].mutate();
 			}
 		}
 	}
@@ -118,15 +118,15 @@ public class Evolutionizer {
 	 * Recombination phase of the evolutionizer.
 	 */
 	void recombination() {
-		Dna[] npop = new Dna[JBpp.ps];
+		Dna[] npop = new Dna[Bpp.ps];
 		int i = 0;
 
-		while (i < JBpp.ps) {
-			int parentAidx = JBpp.rand.nextInt(JBpp.ps);
-			int parentBidx = JBpp.rand.nextInt(JBpp.ps);
+		while (i < Bpp.ps) {
+			int parentAidx = Bpp.rand.nextInt(Bpp.ps);
+			int parentBidx = Bpp.rand.nextInt(Bpp.ps);
 
-			if (JBpp.rand.nextDouble() < JBpp.rp) {
-				if (JBpp.sel == 'a') {
+			if (Bpp.rand.nextDouble() < Bpp.rp) {
+				if (Bpp.sel == 'a') {
 					npop[i] = Dna.recombineVariantA(pop[parentAidx],
 							pop[parentBidx]);
 				} else {
@@ -144,17 +144,17 @@ public class Evolutionizer {
 	 * Selection phase of the evolutionizer.
 	 */
 	void selection() {
-		Dna[] npop = new Dna[JBpp.ps];
+		Dna[] npop = new Dna[Bpp.ps];
 		double fit = 0.0;
 		double max = Double.MIN_VALUE;
 		int best = 0, c;
 
 		// einfache tournament selection
-		for (int i = 0; i < JBpp.ps; ++i) {
+		for (int i = 0; i < Bpp.ps; ++i) {
 			max = Double.MIN_VALUE;
 
-			for (int j = 0; j < JBpp.sp; ++j) {
-				c = JBpp.rand.nextInt(JBpp.ps);
+			for (int j = 0; j < Bpp.sp; ++j) {
+				c = Bpp.rand.nextInt(Bpp.ps);
 
 				fit = pop[c].fitness();
 
@@ -176,7 +176,7 @@ public class Evolutionizer {
 
 	/**
 	 * Output the population.
-	 *
+	 * 
 	 * @param all
 	 *            Enable of all members.
 	 */
@@ -187,7 +187,7 @@ public class Evolutionizer {
 
 		log.info("Population");
 
-		for (int i = 0; i < JBpp.ps; i++) {
+		for (int i = 0; i < Bpp.ps; i++) {
 			if (all) {
 				log.info(pop[i].toString());
 			}
@@ -201,7 +201,7 @@ public class Evolutionizer {
 			}
 		}
 
-		avg = sum / JBpp.ps;
+		avg = sum / Bpp.ps;
 
 		if (!all) {
 			log.info("  " + pop[best].toString());
