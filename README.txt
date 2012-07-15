@@ -20,14 +20,14 @@
 
 Requirements:
 
-Java2 SDK
-GNU Java getopt classes
+Java SE SDK 1.6
+Apache Maven 3.x
 
 
 Installation:
 
 cd [source-directory]
-javac *.java
+mvn install
 
 
 Usage: bpp [Options] file
