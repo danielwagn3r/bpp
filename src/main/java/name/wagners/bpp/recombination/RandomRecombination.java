@@ -19,22 +19,28 @@
  * $Id$
  */
 
-package name.wagners.bpp;
+package name.wagners.bpp.recombination;
+
+import name.wagners.bpp.Dna;
+import lombok.extern.slf4j.Slf4j;
 
 /**
- * Interface for mutation algorithms.
- *
  * @author Daniel Wagner <daniel@wagners.name>
  */
-public interface Mutation {
+@Slf4j
+public class RandomRecombination implements Recombination {
 
-	/**
-	 * Mutates the given Dna object.
+	/*
+	 * (non-Javadoc)
 	 *
-	 * @param dna
-	 *            The object to mutate.
-	 * @return The mutated object.
+	 * @see
+	 * name.wagners.bpp.algorithm.Recombination#recombine(name.wagners.bpp.Dna,
+	 * name.wagners.bpp.Dna)
 	 */
-	Dna mutate(final Dna dna);
+	@Override
+	public Dna recombine(Dna a, Dna b) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

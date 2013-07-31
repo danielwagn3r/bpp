@@ -19,27 +19,56 @@
  * $Id$
  */
 
-package name.wagners.bpp;
+package name.wagners.bpp.selection;
 
+import name.wagners.bpp.Bpp;
+import name.wagners.bpp.Dna;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * Class for a tournament selection algorithm.
+ *
  * @author Daniel Wagner <daniel@wagners.name>
  */
 @Slf4j
-public class RandomRecombination implements Recombination {
+public class TournamentSelection implements Selection {
 
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see
-	 * name.wagners.bpp.algorithm.Recombination#recombine(name.wagners.bpp.Dna,
-	 * name.wagners.bpp.Dna)
+	 * @see name.wagners.bpp.algorithm.Selection#select(name.wagners.bpp.Dna[])
 	 */
 	@Override
-	public Dna recombine(Dna a, Dna b) {
-		// TODO Auto-generated method stub
-		return null;
+	public Dna[] select(final Dna[] pop) {
+		Dna[] npop = new Dna[Bpp.ps];
+
+		double fit = 0.0;
+		double max = Double.MIN_VALUE;
+		int best = 0, c;
+
+		// einfache tournament selection
+		for (int i = 0; i < Bpp.ps; ++i) {
+			max = Double.MIN_VALUE;
+
+			for (int j = 0; j < Bpp.sp; ++j) {
+				c = Bpp.rand.nextInt(Bpp.ps);
+
+				fit = pop[c].fitness();
+
+				if (fit > max) {
+					best = c;
+					max = fit;
+				}
+			}
+
+			try {
+				npop[i] = (Dna) pop[best].clone();
+			} catch (CloneNotSupportedException e) {
+				log.error("Could not clone an object.", e);
+			}
+		}
+
+		return npop;
 	}
 
 }

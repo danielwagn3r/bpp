@@ -19,8 +19,11 @@
  * $Id$
  */
 
-package name.wagners.bpp;
+package name.wagners.bpp.mutation;
 
+import name.wagners.bpp.Bpp;
+import name.wagners.bpp.Chromosome;
+import name.wagners.bpp.Dna;
 import lombok.extern.slf4j.Slf4j;
 
 /**

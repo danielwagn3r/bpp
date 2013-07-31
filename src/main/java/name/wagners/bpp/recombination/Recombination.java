@@ -19,7 +19,9 @@
  * $Id$
  */
 
-package name.wagners.bpp;
+package name.wagners.bpp.recombination;
+
+import name.wagners.bpp.Dna;
 
 /**
  * Interface for recombination algorithms.

@@ -63,7 +63,7 @@ public class Bpp {
 	public static boolean elitism = DEFAULT_ELITISM;
 	static String fname;
 
-	static double wmax;
+	public static double wmax;
 	static int n;
 
 	public static Instance instance;

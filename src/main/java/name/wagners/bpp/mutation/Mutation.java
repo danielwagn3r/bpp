@@ -19,22 +19,24 @@
  * $Id$
  */
 
-package name.wagners.bpp;
+package name.wagners.bpp.mutation;
+
+import name.wagners.bpp.Dna;
 
 /**
- * Interface for selection algorithms.
+ * Interface for mutation algorithms.
  *
  * @author Daniel Wagner <daniel@wagners.name>
  */
-public interface Selection {
+public interface Mutation {
 
 	/**
-	 * Selection of new population out of an existing one.
+	 * Mutates the given Dna object.
 	 *
-	 * @param pop
-	 *            The input population.
-	 * @return The resulting population.
+	 * @param dna
+	 *            The object to mutate.
+	 * @return The mutated object.
 	 */
-	Dna[] select(final Dna[] pop);
+	Dna mutate(final Dna dna);
 
 }

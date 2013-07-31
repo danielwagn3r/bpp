@@ -39,7 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Instance {
 
-	double[] data;
+	public double[] data;
 
 	void load(String fileName) {
 		File file;

@@ -19,19 +19,24 @@
  * $Id$
  */
 
-package name.wagners.bpp;
+package name.wagners.bpp.selection;
 
-import lombok.extern.slf4j.Slf4j;
+import name.wagners.bpp.Dna;
 
 /**
+ * Interface for selection algorithms.
+ *
  * @author Daniel Wagner <daniel@wagners.name>
  */
-@Slf4j
-public class CrossoverRecombination implements Recombination {
+public interface Selection {
 
-	@Override
-	public Dna recombine(final Dna parentA, final Dna parentB) {
-		return parentA;
-	}
+	/**
+	 * Selection of new population out of an existing one.
+	 *
+	 * @param pop
+	 *            The input population.
+	 * @return The resulting population.
+	 */
+	Dna[] select(final Dna[] pop);
 
 }
