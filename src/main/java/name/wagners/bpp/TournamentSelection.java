@@ -1,7 +1,7 @@
 /*
  * Bpp - A Bin Packer in Java
  *
- * Copyright (C) 2008  Daniel Wagner <dwkwaxi@gmail.com>
+ * Copyright (C) 2012  Daniel Wagner <daniel@wagners.name>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,24 +21,19 @@
 
 package name.wagners.bpp;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Class for a tournament selection algorithm.
- * 
+ *
  * @author Daniel Wagner <daniel@wagners.name>
  */
+@Slf4j
 public class TournamentSelection implements Selection {
-
-	/**
-	 * My Log class.
-	 */
-	private static Log log = LogFactory.getLog(TournamentSelection.class);
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see name.wagners.bpp.algorithm.Selection#select(name.wagners.bpp.Dna[])
 	 */
 	@Override
@@ -67,7 +62,7 @@ public class TournamentSelection implements Selection {
 			try {
 				npop[i] = (Dna) pop[best].clone();
 			} catch (CloneNotSupportedException e) {
-				log.fatal("Could not clone an object.", e);
+				log.error("Could not clone an object.", e);
 			}
 		}
 

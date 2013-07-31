@@ -1,7 +1,7 @@
 /*
  * Bpp - A Bin Packer in Java
  *
- * Copyright (C) 2008  Daniel Wagner <dwkwaxi@gmail.com>
+ * Copyright (C) 2012  Daniel Wagner <daniel@wagners.name>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * $Id: Bpp.java 1192 2008-06-03 04:03:13Z Natascha $
+ * $Id$
  */
 
 /**

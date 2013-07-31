@@ -1,7 +1,7 @@
 /*
  * Bpp - A Bin Packer in Java
  *
- * Copyright (C) 2008  Daniel Wagner <dwkwaxi@gmail.com>
+ * Copyright (C) 2012  Daniel Wagner <daniel@wagners.name>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,12 +21,15 @@
 
 package name.wagners.bpp;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * This class provides a pool of integers, which can be take in a random
  * sequence.
- * 
+ *
  * @author Daniel Wagner <daniel@wagners.name>
  */
+@Slf4j
 class Pool {
 
 	/**
@@ -46,7 +49,7 @@ class Pool {
 
 	/**
 	 * Simplest constructor.
-	 * 
+	 *
 	 * @param sizeOfPool
 	 *            Size of the sequence in the pool.
 	 */
@@ -57,7 +60,7 @@ class Pool {
 
 	/**
 	 * Simple constructor.
-	 * 
+	 *
 	 * @param offset
 	 *            An offset that shifts the start of sequence from zero.
 	 * @param sizeOfPool
@@ -71,7 +74,7 @@ class Pool {
 
 	/**
 	 * Reset the pool.
-	 * 
+	 *
 	 * A new sequence of integers from the same pool is available.
 	 */
 	public void reset() {
@@ -84,7 +87,7 @@ class Pool {
 
 	/**
 	 * Adjusts the size of the pool.
-	 * 
+	 *
 	 * @param sizeOfPool
 	 *            Size of the sequence of integers in the pool.
 	 */
@@ -100,7 +103,7 @@ class Pool {
 
 	/**
 	 * Choose the next integer from the pool for the sequence.
-	 * 
+	 *
 	 * @return Random integer not already chosen from the pool.
 	 */
 	public int nextInt() throws NoNextIntAvailableException,

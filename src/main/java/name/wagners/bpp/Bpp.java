@@ -1,7 +1,7 @@
 /*
  * Bpp - A Bin Packer in Java
  *
- * Copyright (C) 2008  Daniel Wagner <dwkwaxi@gmail.com>
+ * Copyright (C) 2012  Daniel Wagner <daniel@wagners.name>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@ package name.wagners.bpp;
 
 import java.util.Random;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -31,20 +33,14 @@ import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * The Main class.
- * 
+ *
  * @author Daniel Wagner <daniel@wagners.name>
  */
+@Slf4j
 public class Bpp {
-
-	/**
-	 * My Log class.
-	 */
-	private static final Log LOG = LogFactory.getLog(Bpp.class);
 
 	private static final int DEFAULT_GEN = 50;
 	private static final int DEFAULT_SP = 4;
@@ -164,7 +160,7 @@ public class Bpp {
 			}
 
 			if (line.hasOption("version")) {
-				LOG.info("Bpp 0.1 (c) 2007 by Daniel Wagner");
+				log.info("Bpp 0.1 (c) 2007 by Daniel Wagner");
 			}
 
 			if (line.hasOption("datafile")) {
@@ -208,7 +204,7 @@ public class Bpp {
 			}
 
 		} catch (ParseException exp) {
-			LOG.info("Unexpected exception:" + exp.getMessage(), exp);
+			log.info("Unexpected exception:" + exp.getMessage(), exp);
 
 			// automatically generate the help statement
 			HelpFormatter formatter = new HelpFormatter();
@@ -219,16 +215,16 @@ public class Bpp {
 
 		// Ausgabe der eingestellten Optionen
 
-		LOG.info("Configuration");
-		LOG.info("  Datafile:                  " + fname);
-		LOG.info("  Generations:               " + gen);
-		LOG.info("  Population size:           " + ps);
-		LOG.info("  Elitism:                   " + elitism);
-		LOG.info("  Mutation propapility:      " + mp);
-		LOG.info("  Mutation rate:             " + mr);
-		LOG.info("  Recombination algorithm    " + (char) sel);
-		LOG.info("  Recombination propapility: " + rp);
-		LOG.info("  Selection pressure:        " + sp);
+		log.info("Configuration");
+		log.info("  Datafile:                  " + fname);
+		log.info("  Generations:               " + gen);
+		log.info("  Population size:           " + ps);
+		log.info("  Elitism:                   " + elitism);
+		log.info("  Mutation propapility:      " + mp);
+		log.info("  Mutation rate:             " + mr);
+		log.info("  Recombination algorithm    " + (char) sel);
+		log.info("  Recombination propapility: " + rp);
+		log.info("  Selection pressure:        " + sp);
 
 		// Daten laden
 		instance = new Instance();

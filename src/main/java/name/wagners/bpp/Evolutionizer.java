@@ -1,7 +1,7 @@
 /*
  * Bpp - A Bin Packer in Java
  *
- * Copyright (C) 2008  Daniel Wagner <dwkwaxi@gmail.com>
+ * Copyright (C) 2012  Daniel Wagner <daniel@wagners.name>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,22 +21,17 @@
 
 package name.wagners.bpp;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * An evolutionary algorithm.
- * 
+ *
  * Performs recombinations, mutations and selections.
- * 
+ *
  * @author Daniel Wagner <daniel@wagners.name>
  */
+@Slf4j
 public class Evolutionizer {
-
-	/**
-	 * My Log class.
-	 */
-	private static Log log = LogFactory.getLog(Evolutionizer.class);
 
 	/**
 	 * The instance which is handled.
@@ -50,7 +45,7 @@ public class Evolutionizer {
 
 	/**
 	 * Simple constructor.
-	 * 
+	 *
 	 * @param i
 	 *            Instance of the bin packing problem.
 	 */
@@ -167,7 +162,7 @@ public class Evolutionizer {
 			try {
 				npop[i] = (Dna) pop[best].clone();
 			} catch (CloneNotSupportedException e) {
-				log.fatal("Could not clone an object.", e);
+				log.error("Could not clone an object.", e);
 			}
 		}
 
@@ -176,7 +171,7 @@ public class Evolutionizer {
 
 	/**
 	 * Output the population.
-	 * 
+	 *
 	 * @param all
 	 *            Enable of all members.
 	 */

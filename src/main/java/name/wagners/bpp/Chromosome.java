@@ -1,7 +1,7 @@
 /*
  * Bpp - A Bin Packer in Java
  *
- * Copyright (C) 2008  Daniel Wagner <dwkwaxi@gmail.com>
+ * Copyright (C) 2012  Daniel Wagner <daniel@wagners.name>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,11 +24,14 @@ package name.wagners.bpp;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * This class represents a bin.
- * 
+ *
  * @author Daniel Wagner <daniel@wagners.name>
  */
+@Slf4j
 public class Chromosome extends Object implements Cloneable {
 
 	/**
@@ -54,7 +57,7 @@ public class Chromosome extends Object implements Cloneable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#clone()
 	 */
 	@Override
@@ -64,9 +67,9 @@ public class Chromosome extends Object implements Cloneable {
 
 		/**
 		 * old version Chromosome c = new Chromosome();
-		 * 
+		 *
 		 * for (int j = 0; j < gens.size(); ++j) { c.add(get(j)); }
-		 * 
+		 *
 		 * return (c);
 		 */
 	}
@@ -116,7 +119,7 @@ public class Chromosome extends Object implements Cloneable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

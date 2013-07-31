@@ -1,7 +1,7 @@
 /*
  * Bpp - A Bin Packer in Java
  *
- * Copyright (C) 2008  Daniel Wagner <dwkwaxi@gmail.com>
+ * Copyright (C) 2012  Daniel Wagner <daniel@wagners.name>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,14 +23,14 @@ package name.wagners.bpp;
 
 /**
  * Interface for selection algorithms.
- * 
+ *
  * @author Daniel Wagner <daniel@wagners.name>
  */
 public interface Selection {
 
 	/**
 	 * Selection of new population out of an existing one.
-	 * 
+	 *
 	 * @param pop
 	 *            The input population.
 	 * @return The resulting population.

@@ -1,5 +1,5 @@
   BPP - A Bin Packager
-  Copyright (C) 2003  Daniel Wagner <daniel@wagners.name>
+  Copyright (C) 2012  Daniel Wagner <daniel@wagners.name>
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by

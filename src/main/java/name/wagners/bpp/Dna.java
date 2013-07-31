@@ -1,7 +1,7 @@
 /*
  * Bpp - A Bin Packer in Java
  *
- * Copyright (C) 2008  Daniel Wagner <dwkwaxi@gmail.com>
+ * Copyright (C) 2012  Daniel Wagner <daniel@wagners.name>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,20 +24,15 @@ package name.wagners.bpp;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author Daniel Wagner <daniel@wagners.name>
  */
+@Slf4j
 public class Dna extends Object implements Cloneable {
 
 	private static final double PROPABILITY = 0.5;
-
-	/**
-	 * My Log class.
-	 */
-	private static Log log = LogFactory.getLog(Dna.class);
 
 	public static Dna recombineVariantA(Dna a, Dna b) {
 		Dna c;
@@ -97,7 +92,7 @@ public class Dna extends Object implements Cloneable {
 				}
 
 			} catch (CloneNotSupportedException e) {
-				log.fatal("Could not clone an object.", e);
+				log.error("Could not clone an object.", e);
 			}
 		}
 
@@ -144,19 +139,19 @@ public class Dna extends Object implements Cloneable {
 
 		/**
 		 * old version Chromosome c = new Chromosome();
-		 * 
+		 *
 		 * Dna d = new Dna(false);
-		 * 
+		 *
 		 * for (int j = 0; j < dna.size(); ++j) { d.dna = (Vector<Chromosome>)
 		 * dna.clone(); }
-		 * 
+		 *
 		 * return (d);
 		 */
 	}
 
 	/**
 	 * Computes the fitness.
-	 * 
+	 *
 	 * @return Objective value.
 	 */
 	public double fitness() {

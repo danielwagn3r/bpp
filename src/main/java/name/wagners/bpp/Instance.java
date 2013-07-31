@@ -1,7 +1,7 @@
 /*
  * Bpp - A Bin Packer in Java
  *
- * Copyright (C) 2008  Daniel Wagner <dwkwaxi@gmail.com>
+ * Copyright (C) 2012  Daniel Wagner <daniel@wagners.name>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,22 +27,17 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * An instance of the Binpack-Problem.
- * 
+ *
  * This class holds all instance data.
- * 
+ *
  * @author Daniel Wagner <daniel@wagners.name>
  */
+@Slf4j
 public class Instance {
-
-	/**
-	 * My Log class.
-	 */
-	private static Log log = LogFactory.getLog(Instance.class);
 
 	double[] data;
 
@@ -55,9 +50,9 @@ public class Instance {
 			file = new File(fileName);
 
 			if (!file.exists()) {
-				log.fatal("File '" + fileName + "' doesn't exist!");
+				log.error("File '" + fileName + "' doesn't exist!");
 			} else if (!file.canRead()) {
-				log.fatal("File '" + fileName + "' couldn't be read!");
+				log.error("File '" + fileName + "' couldn't be read!");
 			} else {
 				fileReader = new BufferedReader(new FileReader(file));
 
@@ -69,14 +64,14 @@ public class Instance {
 					Bpp.wmax = (new Double(tokenizer.nextToken()))
 							.doubleValue();
 				} else {
-					log.fatal("File '" + fileName + "' currupted!");
+					log.error("File '" + fileName + "' currupted!");
 					System.exit(2);
 				}
 
 				if (tokenizer.hasMoreTokens()) {
 					Bpp.n = (Integer.valueOf(tokenizer.nextToken())).intValue();
 				} else {
-					log.fatal("File '" + fileName + "' currupted!");
+					log.error("File '" + fileName + "' currupted!");
 					System.exit(2);
 				}
 
@@ -95,13 +90,13 @@ public class Instance {
 						data[i] = (new Double(tokenizer.nextToken()))
 								.doubleValue();
 					} else {
-						log.fatal("File '" + fileName + "' currupted!");
+						log.error("File '" + fileName + "' currupted!");
 						System.exit(2);
 					}
 				}
 			}
 		} catch (IOException e) {
-			log.fatal(e.getMessage());
+			log.error(e.getMessage());
 
 			// TODO: Tidy up exception handling.
 			System.exit(2);
