@@ -157,7 +157,7 @@
 							<mainClass>name.wagners.bpp.Bpp</mainClass>
 						</manifest>
 						<manifestEntries>
-							<url>${pom.url}</url>
+							<url>${project.url}</url>
 						</manifestEntries>
 					</archive>
 				</configuration>
@@ -259,7 +259,10 @@
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<ignore></ignore>
+										<execute>
+											<runOnIncremental>false</runOnIncremental>
+											<runOnConfiguration>false</runOnConfiguration>
+										</execute>
 									</action>
 								</pluginExecution>
 							</pluginExecutions>
