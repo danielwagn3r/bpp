@@ -80,7 +80,7 @@ public class Bpp {
 		options.addOption(OptionBuilder.hasArg().withArgName("int")
 				.withLongOpt("generations")
 				.withDescription("Number of generations [default: 50]")
-				.create());
+				.create("g"));
 
 		options.addOption(OptionBuilder.hasArg().withArgName("int")
 				.withLongOpt("mutrate")
@@ -122,29 +122,29 @@ public class Bpp {
 
 		options.addOption(OptionBuilder.hasArg().withArgName("bool")
 				.withLongOpt("elitism")
-				.withDescription("Enable Elitism [default: 1]").create());
+				.withDescription("Enable Elitism [default: 1]").create("e"));
 
 		options.addOption(OptionBuilder
 				.hasArg()
-				.withArgName("file")
+				.withArgName("filename")
 				// .isRequired()
 				.withLongOpt("datafile")
 				.withDescription("Problem data file [default: \"binpack.txt\"]")
-				.create());
+				.create("f"));
 
 		options.addOptionGroup(new OptionGroup().addOption(
 				OptionBuilder.withLongOpt("verbose")
-						.withDescription("be extra verbose").create())
+						.withDescription("be extra verbose").create("v"))
 				.addOption(
 						OptionBuilder.withLongOpt("quiet")
-								.withDescription("be extra quiet").create()));
+								.withDescription("be extra quiet").create("q")));
 
 		options.addOption(OptionBuilder.withLongOpt("version")
 				.withDescription("print the version information and exit")
-				.create());
+				.create("V"));
 
 		options.addOption(OptionBuilder.withLongOpt("help")
-				.withDescription("print this message").create());
+				.withDescription("print this message").create("h"));
 
 		try {
 			// parse the command line arguments

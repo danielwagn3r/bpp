@@ -22,6 +22,8 @@ package name.wagners.bpp;
 
 import static org.junit.Assert.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
 /**
@@ -29,6 +31,11 @@ import org.junit.Test;
  *
  */
 public class ChromosomeTests {
+
+	/**
+	 * My Log class.
+	 */
+	private static final Log LOG = LogFactory.getLog(ChromosomeTests.class);
 
 	/**
 	 * Test method for {@link name.wagners.bpp.Chromosome#Chromosome()}.
@@ -62,7 +69,11 @@ public class ChromosomeTests {
 	 */
 	@Test
 	public void testGet() {
-		fail("Not yet implemented"); // TODO
+		Chromosome chrom = new Chromosome();
+
+		chrom.add(1);
+
+		assertEquals(1, chrom.get(0));
 	}
 
 	/**
