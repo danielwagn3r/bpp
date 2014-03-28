@@ -32,6 +32,21 @@
 		</license>
 	</licenses>
 
+    <scm>
+        <developerConnection>git@git.wagners.name:bpp.git</developerConnection>
+        <connection>git@git.wagners.name:bpp.git</connection>
+    </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>nexus</id>
+            <url>https://repo.wagners.name/nexus/content/repositories/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus</id>
+            <url>https://repo.wagners.name/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+     </distributionManagement>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
