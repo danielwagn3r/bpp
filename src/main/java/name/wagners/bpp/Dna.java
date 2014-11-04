@@ -18,7 +18,6 @@
  *
  * $Id$
  */
-
 package name.wagners.bpp;
 
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author Daniel Wagner <daniel@wagners.name>
+ * The Dna class.
  */
 @Slf4j
 public class Dna extends Object implements Cloneable {

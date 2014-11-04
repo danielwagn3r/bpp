@@ -1,7 +1,7 @@
 /*
  * Bpp - A Bin Packer in Java
  *
- * Copyright (C) 2012  Daniel Wagner <daniel@wagners.name>
+ * Copyright (C) 2014  Daniel Wagner
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,10 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * $Id$
  */
-
 package name.wagners.bpp;
 
 import java.util.Random;
@@ -36,8 +33,6 @@ import org.apache.commons.cli.PosixParser;
 
 /**
  * The Main class.
- *
- * @author Daniel Wagner <daniel@wagners.name>
  */
 @Slf4j
 public class Bpp {
