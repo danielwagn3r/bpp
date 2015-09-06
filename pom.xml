@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>name.wagners</groupId>
 		<artifactId>maven-parent</artifactId>
-		<version>5</version>
+		<version>7</version>
 	</parent>
 
 	<licenses>
