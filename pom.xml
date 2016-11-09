@@ -7,13 +7,13 @@
 	<packaging>jar</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>bpp</name>
-    <description>A Bin packager in Java</description>
+	<description>A Bin packager in Java</description>
 	<url>http://www.wagners.name/bpp</url>
 
 	<parent>
 		<groupId>name.wagners</groupId>
 		<artifactId>maven-parent</artifactId>
-		<version>7</version>
+		<version>15</version>
 	</parent>
 
 	<licenses>
